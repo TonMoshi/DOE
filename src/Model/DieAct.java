@@ -22,7 +22,7 @@ public class DieAct{
     public void run() {
         List<GameObj> list = controller.getMap().getGObjs();
         for(int i=0;i<list.size();i++){
-            if(list.get(i).getLife()==0){
+            if(list.get(i).getLife()<=0){
                 list.get(i).die();
                 controller.removeGO4Death(list.get(i));
                 if(list.get(i).getOwner().getName().equals(controller.getPlayer().getName())){
