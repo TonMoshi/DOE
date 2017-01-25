@@ -5,12 +5,29 @@
  */
 package View.Terrain;
 
+import View.Representation;
 import no.geosoft.cc.graphics.GObject;
 
 /**
  *
  * @author dam2
  */
-public class Map extends GObject{
+public class Map extends Representation{
+    
+    int w, h, numCasX, numCasY;
+    
+    public Map(int w, int h){
+    
+        this.w = w;
+        this.h = h;
+    }
+    
+    public int getNumCasX(){
+        return numCasX;
+    }
+    
+    public int getNumCasY(){
+        return numCasY;
+    }
     
 }

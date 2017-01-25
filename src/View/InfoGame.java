@@ -5,6 +5,9 @@
  */
 package View;
 
+import java.util.List;
+import javax.swing.JLabel;
+
 /**
  *
  * @author dam2
@@ -18,8 +21,10 @@ public class InfoGame extends javax.swing.JPanel {
     /**
      * Creates new form InfoGame
      */
-    public InfoGame() {
+    public InfoGame(int LifeCityHall) {
         initComponents();
+        
+        this.LifeCityHall = LifeCityHall;
     }
     
 
@@ -43,6 +48,10 @@ public class InfoGame extends javax.swing.JPanel {
     
     public void incrDefense(int x){
         this.defense += x;
+    
+    }
+    
+    public void updateInfo(List<JLabel> l){
     
     }
 

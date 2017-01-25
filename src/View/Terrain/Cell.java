@@ -5,12 +5,14 @@
  */
 package View.Terrain;
 
+import View.Representation;
 import no.geosoft.cc.graphics.GObject;
 
 /**
  *
  * @author dam2
  */
-public class Cell  extends GObject{
+public class Cell  extends Representation{
+    public static int SIDE;
     
 }

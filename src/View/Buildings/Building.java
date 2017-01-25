@@ -5,12 +5,20 @@
  */
 package View.Buildings;
 
+import View.Representation;
 import no.geosoft.cc.graphics.GObject;
 
 /**
  *
  * @author dam2
  */
-public class Building  extends GObject{
-    
+public class Building extends Representation {
+
+    int life;
+
+    public void setLife(int life) {
+        this.life = life;
+
+    }
+
 }

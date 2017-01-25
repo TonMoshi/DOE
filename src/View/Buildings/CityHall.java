@@ -5,12 +5,18 @@
  */
 package View.Buildings;
 
-import no.geosoft.cc.graphics.GObject;
 
 /**
  *
  * @author dam2
  */
-public class CityHall extends GObject{
+public class CityHall extends Building{
     
+    int x, y, z;
+    
+    public CityHall(int x, int y, int z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }

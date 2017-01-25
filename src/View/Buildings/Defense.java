@@ -3,14 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.Units;
+package View.Buildings;
 
-import no.geosoft.cc.graphics.GObject;
 
 /**
  *
  * @author dam2
  */
-public class Defense extends GObject{
+public class Defense extends Building{
     
+    int x, y, z;
+    
+    public Defense(int x, int y, int z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }

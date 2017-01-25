@@ -5,12 +5,21 @@
  */
 package View.Units;
 
-import no.geosoft.cc.graphics.GObject;
+
+
 
 /**
  *
  * @author dam2
  */
-public class Builder extends GObject{
+public class Builder extends Unit{
+    
+    private int x, y, z;
+    
+    public Builder(int x, int y, int z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
     
 }

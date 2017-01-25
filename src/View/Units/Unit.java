@@ -5,12 +5,21 @@
  */
 package View.Units;
 
+import View.Representation;
 import no.geosoft.cc.graphics.GObject;
 
 /**
  *
  * @author dam2
  */
-public class Unit extends GObject{
+public class Unit extends Representation{
+    
+    int life;
+    
+    
+    public void setLife(int life){
+        this.life = life;
+    
+    }
     
 }

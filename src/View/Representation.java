@@ -12,5 +12,24 @@ import no.geosoft.cc.graphics.GObject;
  * @author dam2
  */
 public class Representation  extends GObject{
+    private int X;
+    private int Y;
+    
+    
+    public void setX(int x){
+        this.X = x;
+    }
+    
+    public void setY(int y){
+        this.Y = y;
+    }
+    
+    public int getX(){
+        return X;
+    }
+    
+    public int getY(){
+        return Y;
+    }
     
 }
