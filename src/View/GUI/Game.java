@@ -10,7 +10,6 @@ import View.InfoGame;
 import View.Terrain.Cell;
 import java.awt.Color;
 import java.awt.Dimension;
-import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,12 +36,12 @@ public class Game extends javax.swing.JPanel {
     public Game(User user, List<User> rivals) {
         initComponents();
         GWindow window = new GWindow(Color.BLACK);
-        jPDraw.add (window.getCanvas());
+        jPDraw.add(window.getCanvas());
         // Create scene with default viewport and world extent settings
-        GScene scene = new GScene (window);
-        window.getCanvas().setPreferredSize(new Dimension(40*Cell.SIDE, 30*Cell.SIDE));
+        GScene scene = new GScene(window);
+        window.getCanvas().setPreferredSize(new Dimension(40 * Cell.SIDE, 30 * Cell.SIDE));
         // Create the graphics object and add to the scene
-        Model.Terrain.Map map = new Model.Terrain.Map(40*Cell.SIDE,30*Cell.SIDE);
+        Model.Terrain.Map map = new Model.Terrain.Map(40 * Cell.SIDE, 30 * Cell.SIDE);
         scene.add(map.getRep());
         info = new InfoGame(Model.Buildings.CityHall.MAXLIFE);
         g = new Model.Game(user, rivals, map, scene, info);
@@ -57,16 +56,16 @@ public class Game extends javax.swing.JPanel {
         Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<JLabel> l= new ArrayList<>();
+                List<JLabel> l = new ArrayList<>();
                 l.add(jLabel4);
-                    l.add(jLabel6);
-                    l.add(jLabel8);
-                    l.add(jLabel10);
-                    jLabel4.setText(Model.Buildings.CityHall.MAXLIFE+"");
-                    jLabel6.setText("0");
-                    jLabel8.setText("0");
-                    jLabel10.setText("0");
-                while(0==0){
+                l.add(jLabel6);
+                l.add(jLabel8);
+                l.add(jLabel10);
+                jLabel4.setText(Model.Buildings.CityHall.MAXLIFE + "");
+                jLabel6.setText("0");
+                jLabel8.setText("0");
+                jLabel10.setText("0");
+                while (0 == 0) {
                     try {
                         info.updateInfo(l);
                     } catch (InterruptedException ex) {
