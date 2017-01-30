@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 public class Connection {
     
     
-        private final String USER = "root";
+    private final String USER = "DamOfEmpires";
     private final String PASS = "root";
-    private final String URL = "jdbc:derby://localhost:1527/Usuarios";
+    private final String URL = "jdbc:mysql://137.74.46.102:3306/DamOfEmpires";
     private final java.sql.Connection conn;
     
     
@@ -31,9 +31,8 @@ public class Connection {
     
     private java.sql.Connection initConn() {
 
-        Driver myDriver;
         try {
-            myDriver = new com.mysql.jdbc.Driver();
+            Driver myDriver = new com.mysql.jdbc.Driver();
             DriverManager.registerDriver(myDriver);
             java.sql.Connection connAux = DriverManager.getConnection(URL, USER, PASS);
             return connAux;
@@ -42,15 +41,13 @@ public class Connection {
             System.exit(1);
 
         }
-        
+
         return null;
     }
 
     public java.sql.Connection getConn() {
         return conn;
     }
-    
-    
     
     public void  closeConn(){
     
