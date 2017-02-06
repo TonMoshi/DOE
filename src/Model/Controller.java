@@ -14,14 +14,13 @@ import View.InfoGame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javafx.scene.control.ProgressBar;
 import no.geosoft.cc.graphics.GScene;
 
 /**
  *
  * @author Dani
  */
-class Controller {
+public class Controller {
     private User player;
     private List<Integer> nextPosBP;
     private List<User> rivals;

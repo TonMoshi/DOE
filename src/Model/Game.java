@@ -4,12 +4,8 @@ package Model;
 import Model.Terrain.Map;
 import Model.Users.User;
 import View.InfoGame;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import no.geosoft.cc.graphics.GScene;
 
 /*
@@ -133,7 +129,7 @@ public class Game{
     }
     
     public void loop(){        
-            //Condición de fin de partida
+            //Condiciï¿½n de fin de partida
 	    ares.run();
             ades.run();
             hermes.run();

@@ -5,17 +5,23 @@
  */
 package damofempires;
 
+import Controller.MainController;
+
 /**
  *
  * @author dam2
  */
 public class DamOfEmpires {
+    
+    private static MainController mc;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        mc = new MainController();
     }
     
 }

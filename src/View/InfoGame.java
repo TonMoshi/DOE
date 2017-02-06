@@ -48,10 +48,11 @@ public class InfoGame {
 
     }
 
-    public void updateInfo(List<JLabel> l) {
+    public void updateInfo(List<JLabel> l) throws InterruptedException {
 
         synchronized (l) {
 
+            l.wait();
             l.get(0).setText(String.valueOf(LifeCityHall));
             l.get(1).setText(String.valueOf(warriors));
             l.get(2).setText(String.valueOf(builders));

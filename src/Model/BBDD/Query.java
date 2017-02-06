@@ -152,10 +152,10 @@ public class Query {
     public void setUser(String name, String email, String password) {
         String auxPass = "";
         try {
-            byte[] bytesOfMessage = password.getBytes("UTF-8");
+
             MessageDigest md;
             md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
+            md.update(password.getBytes("UTF-8"));
             byte[] digest = md.digest();
             auxPass = new String(digest);
 
