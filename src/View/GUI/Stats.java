@@ -11,10 +11,12 @@ package View.GUI;
  */
 public class Stats extends javax.swing.JPanel {
 
+    private MainFrame mf;
     /**
      * Creates new form Stats
      */
-    public Stats() {
+    public Stats(MainFrame mf) {
+        this.mf = mf;
         initComponents();
     }
 

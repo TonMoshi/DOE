@@ -5,9 +5,12 @@
  */
 package View.GUI;
 
+import View.CustomElements.HintPasswordField;
+import View.CustomElements.HintTextField;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 /**
  *
@@ -15,19 +18,50 @@ import javax.swing.JLabel;
  */
 public class MainPanel extends javax.swing.JPanel {
 
-    private JFrame mainFrame;
+    private MainFrame mainFrame;
+    private Image background;
+    private boolean login;
 
     /**
      * Creates new form MainPanel
      */
-    public MainPanel(JFrame mF) {
+    public MainPanel(MainFrame mF) {
         initComponents();
         this.mainFrame = mF;
+        login = false;
+        this.setOpaque(false);
+        this.background = new ImageIcon("resources\\images\\background1.jpg").getImage();
+        repaint();
 
-        ImageIcon icon = new ImageIcon("DamOfEmpires\\Resources\\images\\background1.jpg");
-        JLabel thumb = new JLabel();
-        thumb.setIcon(icon);
+        Play.setVisible(false);
 
+        UserName.setVisible(false);
+        Email.setVisible(false);
+        Password.setVisible(false);
+        User.setVisible(false);
+        Error.setVisible(false);
+
+        UserNameText.setVisible(false);
+        EmailText.setVisible(false);
+        PasswordIn.setVisible(false);
+
+        Send.setVisible(false);
+
+    }
+
+    public void paintComponent(Graphics g) {
+
+        /* Obtenemos el tamaño del panel para hacer que se ajuste a este
+		cada vez que redimensionemos la ventana y se lo pasamos al drawImage */
+        int width = this.getSize().width;
+        int height = this.getSize().height;
+
+        // Mandamos que pinte la imagen en el panel
+        if (this.background != null) {
+            g.drawImage(this.background, 0, 0, width, height, null);
+        }
+
+        super.paintComponent(g);
     }
 
     /**
@@ -38,11 +72,266 @@ public class MainPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jLabel2 = new javax.swing.JLabel();
+        Play = new javax.swing.JButton();
+        Login = new javax.swing.JButton();
+        Register = new javax.swing.JButton();
+        UserNameText = new View.CustomElements.HintTextField("Usuario");
+        EmailText = new View.CustomElements.HintTextField("Email");
+        Send = new javax.swing.JButton();
+        UserName = new javax.swing.JLabel();
+        Email = new javax.swing.JLabel();
+        Password = new javax.swing.JLabel();
+        User = new javax.swing.JLabel();
+        Error = new javax.swing.JLabel();
+        PasswordIn = new HintPasswordField("Contraseña");
 
         setLayout(new java.awt.GridBagLayout());
+
+        jLabel2.setFont(new java.awt.Font("Felix Titling", 1, 100)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("DAM OF EMPIRES");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        add(jLabel2, gridBagConstraints);
+
+        Play.setText("Jugar");
+        Play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        add(Play, gridBagConstraints);
+
+        Login.setText("LogIn");
+        Login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
+        add(Login, gridBagConstraints);
+
+        Register.setText("Register");
+        Register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegisterActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 0);
+        add(Register, gridBagConstraints);
+
+        UserNameText.setMinimumSize(new java.awt.Dimension(80, 24));
+        UserNameText.setPreferredSize(new java.awt.Dimension(80, 24));
+        UserNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserNameTextActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        add(UserNameText, gridBagConstraints);
+
+        EmailText.setMinimumSize(new java.awt.Dimension(80, 24));
+        EmailText.setPreferredSize(new java.awt.Dimension(80, 24));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        add(EmailText, gridBagConstraints);
+
+        Send.setText("Send");
+        Send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SendActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        add(Send, gridBagConstraints);
+
+        UserName.setFont(new java.awt.Font("Felix Titling", 1, 18)); // NOI18N
+        UserName.setForeground(new java.awt.Color(255, 255, 255));
+        UserName.setText("UserName");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 200);
+        add(UserName, gridBagConstraints);
+
+        Email.setFont(new java.awt.Font("Felix Titling", 1, 18)); // NOI18N
+        Email.setForeground(new java.awt.Color(255, 255, 255));
+        Email.setText("Email");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 160);
+        add(Email, gridBagConstraints);
+
+        Password.setFont(new java.awt.Font("Felix Titling", 1, 18)); // NOI18N
+        Password.setForeground(new java.awt.Color(255, 255, 255));
+        Password.setText("Password");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 200);
+        add(Password, gridBagConstraints);
+
+        User.setFont(new java.awt.Font("Felix Titling", 1, 24)); // NOI18N
+        User.setForeground(new java.awt.Color(255, 255, 255));
+        User.setText("jLabel5");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        add(User, gridBagConstraints);
+
+        Error.setFont(new java.awt.Font("Felix Titling", 1, 18)); // NOI18N
+        Error.setForeground(new java.awt.Color(255, 51, 51));
+        Error.setText("jLabel6");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        add(Error, gridBagConstraints);
+
+        PasswordIn.setMinimumSize(new java.awt.Dimension(80, 24));
+        PasswordIn.setPreferredSize(new java.awt.Dimension(80, 24));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        add(PasswordIn, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
+        // TODO add your handling code here:
+        
+        mainFrame.showMenu(User.getText());
+
+
+    }//GEN-LAST:event_PlayActionPerformed
+
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
+        // TODO add your handling code here:
+
+        UserName.setVisible(true);
+        Email.setVisible(false);
+        Password.setVisible(true);
+
+        UserNameText.setVisible(true);
+        EmailText.setVisible(false);
+        PasswordIn.setVisible(true);
+
+        Send.setVisible(true);
+
+        login = true;
+
+    }//GEN-LAST:event_LoginActionPerformed
+
+    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
+        // TODO add your handling code here:
+
+        UserName.setVisible(true);
+        Email.setVisible(true);
+        Password.setVisible(true);
+
+        UserNameText.setVisible(true);
+        EmailText.setVisible(true);
+        PasswordIn.setVisible(true);
+
+        Send.setVisible(true);
+        
+        login = false;
+
+
+    }//GEN-LAST:event_RegisterActionPerformed
+
+    private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
+        Error.setVisible(false);
+
+        if (login) {
+            //Si el login se lleva a cabo correctamente
+            if (mainFrame.getMc().logIn(UserNameText.getText().trim(), Arrays.toString(PasswordIn.getPassword()).trim())) {
+                User.setVisible(true);
+                User.setText("Bienvenido "+UserNameText.getText());
+                
+                UserName.setVisible(false);
+                Email.setVisible(false);
+                Password.setVisible(false);
+
+                UserNameText.setVisible(false);
+                EmailText.setVisible(false);
+                PasswordIn.setVisible(false);
+
+                Send.setVisible(false);
+                Login.setVisible(false);
+                Register.setVisible(false);
+                Play.setVisible(true);
+                
+                login = false;
+            } else {
+                Error.setVisible(true);
+                Error.setText("Failed to Login");
+            }
+        } else {
+            //Si el registro se lleva a cabo correctamente
+            if (mainFrame.getMc().register(UserNameText.getText().trim(), EmailText.getText().trim(), Arrays.toString(PasswordIn.getPassword()).trim())) {
+                User.setVisible(true);
+                User.setText("Bienvenido "+UserNameText.getText());
+                
+                UserName.setVisible(false);
+                Email.setVisible(false);
+                Password.setVisible(false);
+
+                UserNameText.setVisible(false);
+                EmailText.setVisible(false);
+                PasswordIn.setVisible(false);
+
+                Send.setVisible(false);
+                Login.setVisible(false);
+                Register.setVisible(false);
+                Play.setVisible(true);
+                
+                login = false;
+            }else{
+                Error.setVisible(true);
+                Error.setText("Failed to Register");
+            }
+
+        }
+
+        
+    }//GEN-LAST:event_SendActionPerformed
+
+    private void UserNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserNameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UserNameTextActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Email;
+    private javax.swing.JTextField EmailText;
+    private javax.swing.JLabel Error;
+    private javax.swing.JButton Login;
+    private javax.swing.JLabel Password;
+    private javax.swing.JPasswordField PasswordIn;
+    private javax.swing.JButton Play;
+    private javax.swing.JButton Register;
+    private javax.swing.JButton Send;
+    private javax.swing.JLabel User;
+    private javax.swing.JLabel UserName;
+    private javax.swing.JTextField UserNameText;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

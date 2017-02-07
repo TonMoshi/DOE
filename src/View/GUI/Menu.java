@@ -14,10 +14,22 @@ public class Menu extends javax.swing.JPanel {
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    
+    private String user;
+    private MainFrame mf;
+    
+            
+    public Menu(MainFrame mf) {
         initComponents();
+        this.mf = mf;
+        
+        User.setText(user);
     }
 
+    
+    public void setUser(String user) {
+        this.user = user;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,20 +38,80 @@ public class Menu extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        Play = new javax.swing.JButton();
+        Stats = new javax.swing.JButton();
+        Exit = new javax.swing.JButton();
+        User = new javax.swing.JLabel();
+
+        setLayout(new java.awt.GridBagLayout());
+
+        Play.setText("Play");
+        Play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        add(Play, gridBagConstraints);
+
+        Stats.setText("Stats");
+        Stats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StatsActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        add(Stats, gridBagConstraints);
+
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        add(Exit, gridBagConstraints);
+
+        User.setFont(new java.awt.Font("Felix Titling", 1, 24)); // NOI18N
+        User.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        add(User, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
+        // TODO add your handling code here:
+        
+        mf.showGame();
+    }//GEN-LAST:event_PlayActionPerformed
+
+    private void StatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatsActionPerformed
+        // TODO add your handling code here:
+        
+        mf.showStats();
+        
+    }//GEN-LAST:event_StatsActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        // TODO add your handling code here:
+        
+        Runtime.getRuntime().exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exit;
+    private javax.swing.JButton Play;
+    private javax.swing.JButton Stats;
+    private javax.swing.JLabel User;
     // End of variables declaration//GEN-END:variables
 }

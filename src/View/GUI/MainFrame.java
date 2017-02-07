@@ -44,8 +44,8 @@ public class MainFrame extends javax.swing.JFrame {
         card = (CardLayout) cardo.getLayout();
         
         this.mP = new MainPanel(this);        
-        this.stats = new Stats();
-        this.menu = new Menu();
+        this.stats = new Stats(this);
+        this.menu = new Menu(this);
         
         cardo.add(mP, "MainPanel");
         cardo.add(stats, "Stats");
@@ -70,12 +70,19 @@ public class MainFrame extends javax.swing.JFrame {
     public void showStats(){
         card.show(cardo, "Stats");
     }
-    public void showMenu(){
+    public void showMenu(String user){
+        menu.setUser(user);
         card.show(cardo, "Menu");
     }    
     public void showGame(){
         card.show(cardo,"Game");
     }
+
+    public MainController getMc() {
+        return mc;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

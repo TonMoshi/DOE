@@ -5,9 +5,6 @@
  */
 package Model.BBDD;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,6 +29,7 @@ public class Query {
     public Query(Connection conn) {
         this.conn = conn;
         try {
+
             conn.getConn().setAutoCommit(false);
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,6 +47,7 @@ public class Query {
         ArrayList list = new ArrayList();
         ResultSet rs;
         try {
+            stmt = conn.getConn().createStatement();
             rs = stmt.executeQuery("SELECT * FROM user");
             while (rs.next()) {
                 String[] matrix = new String[2];
@@ -62,72 +61,66 @@ public class Query {
         return list;
     }
 
-    public ArrayList getUser(String player) {
-        ArrayList list = new ArrayList();
+    public String[] getUser(String player) {
         ResultSet rs;
+        String[] matrix = new String[3];
+        String query = "SELECT * FROM user WHERE name='" + player + "'";
         try {
-            rs = stmt.executeQuery("SELECT * FROM user WHERE name='"+player+"'");
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery(query);
             while (rs.next()) {
-                String[] matrix = new String[3];
+
                 matrix[0] = rs.getString("name");
                 matrix[1] = rs.getString("email");
-                String original = rs.getString("password");
-                byte[] bytesOfMessage = original.getBytes("UTF-8");
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(original.getBytes());
-                byte[] digest = md.digest();
-                String pass = new String(digest);
-                matrix[2] = pass;
-                list.add(matrix);
+                matrix[2] = rs.getString("password");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return list;
+        return matrix;
     }
 
     public ArrayList getAllies(String player) {
         ArrayList list = new ArrayList();
-        ResultSet rs;        
+        ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT Player2 FROM Alliances WHERE Player1='"+player+"'");
-            while(rs.next()){
-                list.add(rs.getString("Player2"));            
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery("SELECT Player2 FROM Alliances WHERE Player1='" + player + "'");
+            while (rs.next()) {
+                list.add(rs.getString("Player2"));
             }
-        
+
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return list;
     }
-    
+
     public ArrayList getEnemies(String player) {
-        ArrayList list = new ArrayList();
-        ResultSet rs;        
-        try {
-            rs = stmt.executeQuery("SELECT Player2 FROM Enemies WHERE Player1='"+player+"'");
-            while(rs.next()){
-                list.add(rs.getString("Player2"));            
-            }
-        
-        } catch (SQLException ex) {
-            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return list;
-    }
-    
-    public ArrayList getMatchInfo(String player){
         ArrayList list = new ArrayList();
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM MatchInfo WHERE PlayerName='"+player+"'");
-            while(rs.next()){
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery("SELECT Player2 FROM Enemies WHERE Player1='" + player + "'");
+            while (rs.next()) {
+                list.add(rs.getString("Player2"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public ArrayList getMatchInfo(String player) {
+        ArrayList list = new ArrayList();
+        ResultSet rs;
+        try {
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery("SELECT * FROM MatchInfo WHERE PlayerName='" + player + "'");
+            while (rs.next()) {
                 String[] matrix = new String[7];
                 matrix[0] = rs.getString("PlayerName");
                 matrix[1] = rs.getString("DateHour");
@@ -136,45 +129,29 @@ public class Query {
                 matrix[4] = rs.getString("Defenses");
                 matrix[5] = rs.getString("Builders");
                 matrix[6] = rs.getString("Warriors");
-                
-                list.add(matrix);            
+
+                list.add(matrix);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return list;
     }
 
     //
     //Introducción de Datos
     //
-    public void setUser(String name, String email, String password) {
-        String auxPass = "";
+    public boolean setUser(String name, String email, String password) {
         try {
-
-            MessageDigest md;
-            md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8"));
-            byte[] digest = md.digest();
-            auxPass = new String(digest);
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            ResultSet rs;
-            rs = stmt.executeQuery("INSERT INTO user VALUES('" + name + "','" + email + "','" + auxPass + "')");
+            stmt = conn.getConn().createStatement();
+            String insert  ="INSERT INTO user VALUES('" + name + "','" + email + "','" + password + "')";
+            stmt.executeUpdate(insert);
             conn.getConn().commit();
+            return true;
         } catch (SQLException ex) {
-            try {
-                conn.getConn().rollback();
-            } catch (SQLException ex1) {
-                Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex1);
-            }
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
 
     }
@@ -182,13 +159,6 @@ public class Query {
     //
     //Modificación/Borrado de Datos
     //
-    
-    
-    
-    
-    
-    
-    
     //
     //Setter de la Conexión
     //
