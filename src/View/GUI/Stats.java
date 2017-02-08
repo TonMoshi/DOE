@@ -28,20 +28,184 @@ public class Stats extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        InfoUser = new javax.swing.JPanel();
+        Username = new javax.swing.JLabel();
+        UsernameText = new javax.swing.JTextField();
+        Email = new javax.swing.JLabel();
+        EmailText = new javax.swing.JTextField();
+        Password = new javax.swing.JLabel();
+        PasswordText = new javax.swing.JTextField();
+        Change = new javax.swing.JButton();
+        Games = new javax.swing.JLabel();
+        Win = new javax.swing.JLabel();
+        Time = new javax.swing.JLabel();
+        GameText = new javax.swing.JLabel();
+        WinText = new javax.swing.JLabel();
+        TimeText = new javax.swing.JLabel();
+        Back = new javax.swing.JButton();
+        Clasification = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TableInfo = new javax.swing.JTable();
+
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+
+        Username.setText("Username");
+
+        UsernameText.setPreferredSize(new java.awt.Dimension(70, 24));
+        UsernameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsernameTextActionPerformed(evt);
+            }
+        });
+
+        Email.setText("Email");
+
+        EmailText.setPreferredSize(new java.awt.Dimension(70, 24));
+
+        Password.setText("Password");
+
+        PasswordText.setPreferredSize(new java.awt.Dimension(70, 24));
+
+        Change.setText("Change");
+
+        Games.setText("Games");
+
+        Win.setText("Win");
+
+        Time.setText("Time Played");
+
+        GameText.setText("jLabel7");
+
+        WinText.setText("jLabel8");
+
+        TimeText.setText("jLabel9");
+
+        Back.setText("Back");
+
+        javax.swing.GroupLayout InfoUserLayout = new javax.swing.GroupLayout(InfoUser);
+        InfoUser.setLayout(InfoUserLayout);
+        InfoUserLayout.setHorizontalGroup(
+            InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(InfoUserLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoUserLayout.createSequentialGroup()
+                        .addComponent(Password)
+                        .addGap(18, 18, 18)
+                        .addComponent(PasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(InfoUserLayout.createSequentialGroup()
+                        .addComponent(Email)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EmailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(InfoUserLayout.createSequentialGroup()
+                        .addComponent(Username)
+                        .addGap(18, 18, 18)
+                        .addComponent(UsernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(55, 55, 55)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Time)
+                    .addComponent(Win)
+                    .addComponent(Games))
+                .addGap(34, 34, 34)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(GameText)
+                    .addComponent(WinText)
+                    .addComponent(TimeText))
+                .addContainerGap(29, Short.MAX_VALUE))
+            .addGroup(InfoUserLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Change)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Back)
+                .addGap(130, 130, 130))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        InfoUserLayout.setVerticalGroup(
+            InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(InfoUserLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Username)
+                    .addComponent(UsernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Games)
+                    .addComponent(GameText))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EmailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email)
+                    .addComponent(Win)
+                    .addComponent(WinText))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Password)
+                    .addComponent(Time)
+                    .addComponent(TimeText))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Change)
+                    .addComponent(Back))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        add(InfoUser);
+
+        TableInfo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TableInfo);
+
+        javax.swing.GroupLayout ClasificationLayout = new javax.swing.GroupLayout(Clasification);
+        Clasification.setLayout(ClasificationLayout);
+        ClasificationLayout.setHorizontalGroup(
+            ClasificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClasificationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        ClasificationLayout.setVerticalGroup(
+            ClasificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ClasificationLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        add(Clasification);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void UsernameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsernameTextActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Back;
+    private javax.swing.JButton Change;
+    private javax.swing.JPanel Clasification;
+    private javax.swing.JLabel Email;
+    private javax.swing.JTextField EmailText;
+    private javax.swing.JLabel GameText;
+    private javax.swing.JLabel Games;
+    private javax.swing.JPanel InfoUser;
+    private javax.swing.JLabel Password;
+    private javax.swing.JTextField PasswordText;
+    private javax.swing.JTable TableInfo;
+    private javax.swing.JLabel Time;
+    private javax.swing.JLabel TimeText;
+    private javax.swing.JLabel Username;
+    private javax.swing.JTextField UsernameText;
+    private javax.swing.JLabel Win;
+    private javax.swing.JLabel WinText;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
