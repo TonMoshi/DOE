@@ -22,11 +22,18 @@ public class Connection {
     private final String PASS = "root";
     private final String URL = "jdbc:mysql://137.74.46.102:3306/DamOfEmpires";
     private final java.sql.Connection conn;
+    private boolean checkConn;
     
     
     public Connection(){
         this.conn = initConn();
-        System.out.println("Conexión exitosa a la base de datos.");
+        if (conn != null) {
+            System.out.println("Conexión exitosa a la base de datos.");
+            checkConn = true;
+        }else{
+            checkConn = false;
+        }
+        
     }
     
     private java.sql.Connection initConn() {
@@ -38,11 +45,9 @@ public class Connection {
             return connAux;
         } catch (SQLException ex) {
             System.out.println("Error: unable to load driver class!");
-            System.exit(1);
+            return null;
 
         }
-
-        return null;
     }
 
     public java.sql.Connection getConn() {
@@ -58,5 +63,11 @@ public class Connection {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public boolean isCheckConn() {
+        return checkConn;
+    }
+    
+    
     
 }

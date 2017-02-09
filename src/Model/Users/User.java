@@ -12,17 +12,34 @@ import java.util.List;
  *
  * @author Dani
  */
-public class User {
+public class User implements Comparable<Model.Users.User>{
     private String name;
     private String pass;
     private String email;
     private List<User> enemies;
     private List<User> allies;
+    private int win;
+    private int plays;
+    private float winRatio;
     
-    public User(String name, String pass, String email){
+    public User(String name, String pass, String email, int win, int plays){
         this.name = name;
         this.email = email;
         this.pass = pass;
+        this.win = win;
+        this.plays = plays;
+        updateWinRatio();
+        enemies = new ArrayList<>();
+        allies = new ArrayList<>();
+    }
+    
+    public User(String[] user){
+        this.name = user[0];
+        this.email = user[1];
+        this.pass = user[2];
+        this.win = Integer.parseInt(user[3]);
+        this.plays = Integer.parseInt(user[4]);
+        updateWinRatio();
         enemies = new ArrayList<>();
         allies = new ArrayList<>();
     }
@@ -49,6 +66,19 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void newWin() {
+        this.win = win++;
+    }
+
+    public void newPlays() {
+        this.plays = plays++;
+    }
+    
+    
+    private void updateWinRatio(){
+        winRatio = plays/win;
     }
     
     public boolean addAlly(User ally){
@@ -94,4 +124,28 @@ public class User {
         }
         return false;
     }
+
+    public int getWin() {
+        return win;
+    }
+
+    public int getPlays() {
+        return plays;
+    }
+
+    public float getWinRatio() {
+        return winRatio;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        if (this.getWinRatio()> o.getWinRatio()) {
+            return -1;
+        }else if(this.getWinRatio()== o.getWinRatio()){
+            return 0;
+        }else return 1;
+    }
+    
+    
+    
 }

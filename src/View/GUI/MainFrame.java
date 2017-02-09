@@ -6,16 +6,14 @@
 package View.GUI;
 
 import Controller.MainController;
-import Model.Terrain.Map;
+import Controller.TableInfo;
 import Model.Users.User;
-import View.InfoGame;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import no.geosoft.cc.graphics.GScene;
 
 /**
  *
@@ -42,13 +40,9 @@ public class MainFrame extends javax.swing.JFrame {
         
         cardo = (JPanel) this.getContentPane();
         card = (CardLayout) cardo.getLayout();
-        
-        this.mP = new MainPanel(this);        
-        this.stats = new Stats(this);
+        this.mP = new MainPanel(this); 
         this.menu = new Menu(this);
-        
         cardo.add(mP, "MainPanel");
-        cardo.add(stats, "Stats");
         cardo.add(menu, "Menu");
         makeFrameFullSize(this);
         
@@ -62,12 +56,15 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void createGame(User player, List<User> rivals){
         this.game = new Game(player, rivals);
+        mc.startControllerModel(player, this.game);
         cardo.add(game, "Game");
     }
     public void showMainPanel(){
         card.show(cardo, "MainPanel");    
     }
     public void showStats(){
+        this.stats = new Stats(this,new TableInfo(mc));
+        cardo.add(stats, "Stats");
         card.show(cardo, "Stats");
     }
     public void showMenu(String user){

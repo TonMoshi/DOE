@@ -5,46 +5,71 @@
  */
 package Controller;
 
+import Model.Users.User;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author dam2
  */
-public class TableInfo extends AbstractTableModel{
-    
+public class TableInfo extends AbstractTableModel {
+
     private MainController mc;
-    
-    public TableInfo(MainController mc){
+    private List<User> users;
+
+    public TableInfo(MainController mc) {
         this.mc = mc;
-    
+        this.users = mc.getUsers();
+        Collections.sort(users);
     }
 
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return users.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 4;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        switch (columnIndex) {
+            case 0:
+                return rowIndex+1;
+            case 1:
+                return users.get(rowIndex).getName();
+            case 2:
+                return users.get(rowIndex).getWin();
+            case 3:
+                return users.get(rowIndex).getPlays();
+            default:
+                return 0;
+        }
 
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        super.setValueAt(aValue, rowIndex, columnIndex); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String getColumnName(int column) {
-        return super.getColumnName(column); //To change body of generated methods, choose Tools | Templates.
+        switch (column) {
+            case 0:
+                
+                return "Rank";
+            case 1:
+                
+                 return "UserName";
+            case 2:
+                
+                 return "Wins";
+            case 3:
+                
+                 return "Games Played";
+            default:
+                throw new AssertionError();
+        }
     }
-    
-    
-    
+
 }

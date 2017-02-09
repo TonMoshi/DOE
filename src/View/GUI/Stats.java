@@ -5,6 +5,8 @@
  */
 package View.GUI;
 
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author dam2
@@ -15,8 +17,9 @@ public class Stats extends javax.swing.JPanel {
     /**
      * Creates new form Stats
      */
-    public Stats(MainFrame mf) {
+    public Stats(MainFrame mf, TableModel tModel) {
         this.mf = mf;
+        TableInfo.setModel(tModel);
         initComponents();
     }
 

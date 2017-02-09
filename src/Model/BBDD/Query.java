@@ -5,6 +5,7 @@
  */
 package Model.BBDD;
 
+import Model.Users.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,8 +36,6 @@ public class Query {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    ;
     
     //
     //Acceso a Datos
@@ -61,8 +60,10 @@ public class Query {
         return list;
     }
 
-    public String[] getUser(String player) {
+    public User getUser(String player) {
         ResultSet rs;
+        int win, plays;
+        User user;
         String[] matrix = new String[3];
         String query = "SELECT * FROM user WHERE name='" + player + "'";
         try {
@@ -73,11 +74,16 @@ public class Query {
                 matrix[0] = rs.getString("name");
                 matrix[1] = rs.getString("email");
                 matrix[2] = rs.getString("password");
+                win = rs.getInt("win");
+                plays = rs.getInt("plays");
+                
+                user = new User(matrix[0], matrix[1], matrix[2], win, plays);
+                return user;
             }
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return matrix;
+        return null;
     }
 
     public ArrayList getAllies(String player) {
@@ -138,6 +144,21 @@ public class Query {
 
         return list;
     }
+    
+    public boolean userExist(String player) {
+        ResultSet rs;
+        String query = "SELECT * FROM user WHERE name='" + player + "'";
+        try {
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                return true;
+            }else return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 
     //
     //Introducción de Datos
@@ -145,7 +166,7 @@ public class Query {
     public boolean setUser(String name, String email, String password) {
         try {
             stmt = conn.getConn().createStatement();
-            String insert  ="INSERT INTO user VALUES('" + name + "','" + email + "','" + password + "')";
+            String insert  ="INSERT INTO user VALUES('" + name + "','" + email + "','" + password + "','0,0)";
             stmt.executeUpdate(insert);
             conn.getConn().commit();
             return true;
@@ -159,6 +180,8 @@ public class Query {
     //
     //Modificación/Borrado de Datos
     //
+    
+    
     //
     //Setter de la Conexión
     //

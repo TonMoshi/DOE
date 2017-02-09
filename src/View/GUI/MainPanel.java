@@ -6,7 +6,6 @@
 package View.GUI;
 
 import View.CustomElements.HintPasswordField;
-import View.CustomElements.HintTextField;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Arrays;
@@ -285,6 +284,11 @@ public class MainPanel extends javax.swing.JPanel {
                 Error.setText("Failed to Login");
             }
         } else {
+            
+            //Comprobar si el usuario existe
+            if (mainFrame.getMc()) {
+                
+            }
             //Si el registro se lleva a cabo correctamente
             if (mainFrame.getMc().register(UserNameText.getText().trim(), EmailText.getText().trim(), Arrays.toString(PasswordIn.getPassword()).trim())) {
                 User.setVisible(true);
