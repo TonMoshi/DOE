@@ -5,6 +5,8 @@
  */
 package View.GUI;
 
+import Model.Users.User;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
 /**
@@ -14,13 +16,20 @@ import javax.swing.table.TableModel;
 public class Stats extends javax.swing.JPanel {
 
     private MainFrame mf;
+    private User user;
+
     /**
      * Creates new form Stats
      */
     public Stats(MainFrame mf, TableModel tModel) {
-        this.mf = mf;
-        TableInfo.setModel(tModel);
         initComponents();
+        this.mf = mf;
+        this.user = mf.getUser();
+        TableInfo.setModel(tModel);
+        GameText.setText(String.valueOf(user.getPlays()));
+        WinText.setText(String.valueOf(user.getWinRatio()));
+        TimeText.setText(String.valueOf(mf.getMc().getDuration(user.getName())));
+
     }
 
     /**
@@ -54,7 +63,16 @@ public class Stats extends javax.swing.JPanel {
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
+        InfoUser.setLayout(new java.awt.GridBagLayout());
+
         Username.setText("Username");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(17, 25, 0, 0);
+        InfoUser.add(Username, gridBagConstraints);
 
         UsernameText.setPreferredSize(new java.awt.Dimension(70, 24));
         UsernameText.addActionListener(new java.awt.event.ActionListener() {
@@ -62,95 +80,129 @@ public class Stats extends javax.swing.JPanel {
                 UsernameTextActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 56;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 18, 0, 0);
+        InfoUser.add(UsernameText, gridBagConstraints);
 
         Email.setText("Email");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 25, 0, 0);
+        InfoUser.add(Email, gridBagConstraints);
 
         EmailText.setPreferredSize(new java.awt.Dimension(70, 24));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 56;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        InfoUser.add(EmailText, gridBagConstraints);
 
         Password.setText("Password");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 26, 0, 0);
+        InfoUser.add(Password, gridBagConstraints);
 
         PasswordText.setPreferredSize(new java.awt.Dimension(70, 24));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 56;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        InfoUser.add(PasswordText, gridBagConstraints);
 
         Change.setText("Change");
+        Change.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChangeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 48, 6, 0);
+        InfoUser.add(Change, gridBagConstraints);
 
         Games.setText("Games");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(17, 22, 0, 0);
+        InfoUser.add(Games, gridBagConstraints);
 
-        Win.setText("Win");
+        Win.setText("Win Ratio");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 22, 0, 0);
+        InfoUser.add(Win, gridBagConstraints);
 
         Time.setText("Time Played");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 22, 0, 0);
+        InfoUser.add(Time, gridBagConstraints);
 
         GameText.setText("jLabel7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(17, 34, 0, 29);
+        InfoUser.add(GameText, gridBagConstraints);
 
         WinText.setText("jLabel8");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 34, 0, 29);
+        InfoUser.add(WinText, gridBagConstraints);
 
         TimeText.setText("jLabel9");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 34, 0, 29);
+        InfoUser.add(TimeText, gridBagConstraints);
 
         Back.setText("Back");
-
-        javax.swing.GroupLayout InfoUserLayout = new javax.swing.GroupLayout(InfoUser);
-        InfoUser.setLayout(InfoUserLayout);
-        InfoUserLayout.setHorizontalGroup(
-            InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(InfoUserLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoUserLayout.createSequentialGroup()
-                        .addComponent(Password)
-                        .addGap(18, 18, 18)
-                        .addComponent(PasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(InfoUserLayout.createSequentialGroup()
-                        .addComponent(Email)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(EmailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(InfoUserLayout.createSequentialGroup()
-                        .addComponent(Username)
-                        .addGap(18, 18, 18)
-                        .addComponent(UsernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(55, 55, 55)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Time)
-                    .addComponent(Win)
-                    .addComponent(Games))
-                .addGap(34, 34, 34)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(GameText)
-                    .addComponent(WinText)
-                    .addComponent(TimeText))
-                .addContainerGap(29, Short.MAX_VALUE))
-            .addGroup(InfoUserLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Change)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Back)
-                .addGap(130, 130, 130))
-        );
-        InfoUserLayout.setVerticalGroup(
-            InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(InfoUserLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Username)
-                    .addComponent(UsernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Games)
-                    .addComponent(GameText))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EmailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Email)
-                    .addComponent(Win)
-                    .addComponent(WinText))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Password)
-                    .addComponent(Time)
-                    .addComponent(TimeText))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(InfoUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Change)
-                    .addComponent(Back))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 6, 6, 0);
+        InfoUser.add(Back, gridBagConstraints);
 
         add(InfoUser);
 
@@ -173,7 +225,7 @@ public class Stats extends javax.swing.JPanel {
             ClasificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClasificationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                 .addContainerGap())
         );
         ClasificationLayout.setVerticalGroup(
@@ -189,6 +241,37 @@ public class Stats extends javax.swing.JPanel {
     private void UsernameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UsernameTextActionPerformed
+
+    private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
+
+        String name = UsernameText.getText();
+        if (!name.isEmpty()) {
+            if (mf.getMc().setUserName(name, user.getName())) {
+                UsernameText.setText("Éxito");
+            } else UsernameText.setText("Fallo");
+        }
+        String email = EmailText.getText();
+        if (!email.isEmpty()) {
+            if (mf.getMc().setEmail(email, user.getName())) {
+                EmailText.setText("Éxito");
+            } else EmailText.setText("Fallo");
+        }
+
+        String pass = PasswordText.getText();
+        if (!pass.isEmpty()) {
+            String auxPassword = JOptionPane.showInputDialog(this, "Introduce tu contraseña actual:", "Modificar Contraseña", JOptionPane.ERROR_MESSAGE);
+            if (mf.getMc().logIn(user.getName(), auxPassword)) {
+                if (mf.getMc().setPassword(pass, user.getName())) {
+                    PasswordText.setText("Éxito");
+                }else PasswordText.setText("Fallo");
+            } else PasswordText.setText("Fallo");
+        }
+    }//GEN-LAST:event_ChangeActionPerformed
+
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        // TODO add your handling code here:
+        mf.showMenu(mf.getUser().getName());
+    }//GEN-LAST:event_BackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

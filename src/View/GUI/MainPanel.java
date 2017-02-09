@@ -17,8 +17,8 @@ import javax.swing.ImageIcon;
  */
 public class MainPanel extends javax.swing.JPanel {
 
-    private MainFrame mainFrame;
-    private Image background;
+    private final MainFrame mainFrame;
+    private final Image background;
     private boolean login;
 
     /**
@@ -216,7 +216,29 @@ public class MainPanel extends javax.swing.JPanel {
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
         // TODO add your handling code here:
         
-        mainFrame.showMenu(User.getText());
+        login = false;
+        Play.setVisible(false);
+
+        UserName.setVisible(false);
+        Email.setVisible(false);
+        Password.setVisible(false);
+        User.setVisible(false);
+        Error.setVisible(false);
+
+        UserNameText.setVisible(false);
+        EmailText.setVisible(false);
+        PasswordIn.setVisible(false);
+
+        Send.setVisible(false);
+        
+        Login.setVisible(true);
+        Register.setVisible(true);
+        
+        String name = UserNameText.getText();
+        UserNameText.setText("");
+        EmailText.setText("");
+        PasswordIn.setText("");
+        mainFrame.showMenu(name);
 
 
     }//GEN-LAST:event_PlayActionPerformed
@@ -285,10 +307,6 @@ public class MainPanel extends javax.swing.JPanel {
             }
         } else {
             
-            //Comprobar si el usuario existe
-            if (mainFrame.getMc()) {
-                
-            }
             //Si el registro se lleva a cabo correctamente
             if (mainFrame.getMc().register(UserNameText.getText().trim(), EmailText.getText().trim(), Arrays.toString(PasswordIn.getPassword()).trim())) {
                 User.setVisible(true);

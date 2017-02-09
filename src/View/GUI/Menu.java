@@ -16,7 +16,7 @@ public class Menu extends javax.swing.JPanel {
      */
     
     private String user;
-    private MainFrame mf;
+    private final MainFrame mf;
     
             
     public Menu(MainFrame mf) {
@@ -44,6 +44,7 @@ public class Menu extends javax.swing.JPanel {
         Stats = new javax.swing.JButton();
         Exit = new javax.swing.JButton();
         User = new javax.swing.JLabel();
+        LogOut = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -58,7 +59,7 @@ public class Menu extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         add(Play, gridBagConstraints);
 
-        Stats.setText("Stats");
+        Stats.setText("Stats and User Options");
         Stats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StatsActionPerformed(evt);
@@ -77,7 +78,7 @@ public class Menu extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         add(Exit, gridBagConstraints);
 
         User.setFont(new java.awt.Font("Felix Titling", 1, 24)); // NOI18N
@@ -86,6 +87,17 @@ public class Menu extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         add(User, gridBagConstraints);
+
+        LogOut.setText("LogOut");
+        LogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogOutActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        add(LogOut, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
@@ -107,9 +119,15 @@ public class Menu extends javax.swing.JPanel {
         Runtime.getRuntime().exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
+    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
+        // TODO add your handling code here:
+        mf.showMainPanel();
+    }//GEN-LAST:event_LogOutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Exit;
+    private javax.swing.JButton LogOut;
     private javax.swing.JButton Play;
     private javax.swing.JButton Stats;
     private javax.swing.JLabel User;

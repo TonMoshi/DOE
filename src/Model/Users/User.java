@@ -43,6 +43,13 @@ public class User implements Comparable<Model.Users.User>{
         enemies = new ArrayList<>();
         allies = new ArrayList<>();
     }
+    
+    public User(String name, String win, String plays){        
+        this.name = name;
+        this.win = Integer.valueOf(win);
+        this.plays = Integer.valueOf(plays);
+    
+    }
 
     public String getEmail() {
         return email;
@@ -78,7 +85,12 @@ public class User implements Comparable<Model.Users.User>{
     
     
     private void updateWinRatio(){
-        winRatio = plays/win;
+        if (plays == 0 || win == 0 ) {
+            winRatio = 0;
+        }else{
+            winRatio = plays/win;
+        }
+        
     }
     
     public boolean addAlly(User ally){

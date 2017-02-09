@@ -36,12 +36,11 @@ public class Query {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     //
     //Acceso a Datos
     //
-
-    public ArrayList getUsers() {
+    public ArrayList<User> getUsers() {
 
         ArrayList list = new ArrayList();
         ResultSet rs;
@@ -49,10 +48,11 @@ public class Query {
             stmt = conn.getConn().createStatement();
             rs = stmt.executeQuery("SELECT * FROM user");
             while (rs.next()) {
-                String[] matrix = new String[2];
+                String[] matrix = new String[3];
                 matrix[0] = rs.getString("name");
-                matrix[1] = rs.getString("email");
-                list.add(matrix);
+                matrix[1] = rs.getString("win");
+                matrix[2] = rs.getString("plays");
+                list.add(new User(matrix[0], matrix[1], matrix[2]));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,15 +69,8 @@ public class Query {
         try {
             stmt = conn.getConn().createStatement();
             rs = stmt.executeQuery(query);
-            while (rs.next()) {
-
-                matrix[0] = rs.getString("name");
-                matrix[1] = rs.getString("email");
-                matrix[2] = rs.getString("password");
-                win = rs.getInt("win");
-                plays = rs.getInt("plays");
-                
-                user = new User(matrix[0], matrix[1], matrix[2], win, plays);
+            if (rs.next()) {
+                user = new User(rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getInt("win"), rs.getInt("plays"));
                 return user;
             }
         } catch (SQLException ex) {
@@ -144,7 +137,25 @@ public class Query {
 
         return list;
     }
-    
+
+    public int getTimePlayed(String player) {
+
+        int time = 0;
+        ResultSet rs;
+        try {
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery("SELECT SUM(Duration) AS duration FROM MatchInfo WHERE PlayerName='" + player + "'");
+
+            if (rs.next()) {
+                time = rs.getInt("duration");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return time;
+    }
+
     public boolean userExist(String player) {
         ResultSet rs;
         String query = "SELECT * FROM user WHERE name='" + player + "'";
@@ -153,7 +164,9 @@ public class Query {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
                 return true;
-            }else return false;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -166,7 +179,7 @@ public class Query {
     public boolean setUser(String name, String email, String password) {
         try {
             stmt = conn.getConn().createStatement();
-            String insert  ="INSERT INTO user VALUES('" + name + "','" + email + "','" + password + "','0,0)";
+            String insert = "INSERT INTO user VALUES('" + name + "','" + email + "','" + password + "',0,0)";
             stmt.executeUpdate(insert);
             conn.getConn().commit();
             return true;
@@ -177,21 +190,59 @@ public class Query {
 
     }
 
+    
+
     //
     //Modificación/Borrado de Datos
     //
     
+    public boolean setUserName(String name, String actualName) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String update = "UPDATE user SET name='"+name+"' WHERE name='"+actualName+"'";
+            stmt.executeUpdate(update);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     
+    public boolean setPassword(String password, String name) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String update = "UPDATE user SET password='"+password+"' WHERE name='"+name+"'";
+            stmt.executeUpdate(update);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean setEmail(String email, String name) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String update = "UPDATE user SET email='"+email+"' WHERE name='"+name+"'";
+            stmt.executeUpdate(update);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     //
     //Setter de la Conexión
     //
-    public void setConn(Connection conn) {
-        this.conn = conn;
-        try {
-            conn.getConn().setAutoCommit(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+//    public void setConn(Connection conn) {
+//        this.conn = conn;
+//        try {
+//            conn.getConn().setAutoCommit(false);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

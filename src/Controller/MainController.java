@@ -29,8 +29,7 @@ public class MainController {
     private boolean connStatus;
 
     public MainController() {
-        
-        
+
         isConnStatus();
         mF = new View.GUI.MainFrame(this);
         mF.setExtendedState(mF.MAXIMIZED_BOTH);
@@ -51,10 +50,8 @@ public class MainController {
         if (user.getName() == null) {
             return false;
 
-        } else if (user.getPass().equals(auxPass)) {
-            return true;
         } else {
-            return false;
+            return user.getPass().equals(auxPass);
         }
 
     }
@@ -65,41 +62,107 @@ public class MainController {
         Connection conn = new Connection();
         Query query = new Query(conn);
 
-        if (query.setUser(name, email, auxPass)) {
-            conn.closeConn();
-            return true;
+        if (!query.userExist(name)) {
+            if (query.setUser(name, email, auxPass)) {
+                conn.closeConn();
+                return true;
+            } else {
+                conn.closeConn();
+                return false;
+            }
         } else {
             conn.closeConn();
             return false;
-        }       
+        }
     }
-    
-    public List<User> getUsers(){
-    
+
+    public List<User> getUsers() {
+
         Connection conn = new Connection();
         Query query = new Query(conn);
         List<User> users = query.getUsers();
         conn.closeConn();
-        return users; 
+        return users;
     }
-    
-    public void startControllerModel(User player, JPanel panel){
-        Map map = new Map(1,1);
+
+    public User getUser(String userName) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        User user = query.getUser(userName);
+        conn.closeConn();
+        return user;
+    }
+
+    public int getDuration(String userName) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        int duration = query.getTimePlayed(userName);
+        conn.closeConn();
+        return duration;
+    }
+
+    public boolean setUserName(String name, String actualName) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        boolean token = false;
+        if (!query.userExist(name)) {
+            token = query.setUserName(name, actualName);
+            conn.closeConn();
+            if (token) {
+                mF.getUser().setName(name);
+            }
+            return token;
+        } else {
+            return token;
+        }
+
+    }
+
+    public boolean setPassword(String pass, String actualName) {
+
+        String auxPass = new Cipher(pass).toString();
+        Connection conn = new Connection();
+        Query query = new Query(conn);
         
+        boolean token = false;
+        token = query.setPassword(auxPass, actualName);
+        conn.closeConn();
+        if (token) {
+            mF.getUser().setPass(auxPass);
+        }
+        return token;
+
+    }
+
+    public boolean setEmail(String email, String name) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        boolean token = false;
+        token = query.setEmail(email, name);
+        conn.closeConn();
+        if (token) {
+            mF.getUser().setEmail(email);
+        }
+        return token;
+
+    }
+
+    public void startControllerModel(User player, JPanel panel) {
+        Map map = new Map(1, 1);
+
         GWindow window = new GWindow();
-        window.getCanvas().setPreferredSize(new Dimension(1000,1000));
+        window.getCanvas().setPreferredSize(new Dimension(1000, 1000));
         panel.add(window.getCanvas());
         GScene scene = new GScene(window);
-        
+
         InfoGame info = new InfoGame(1000);
-        
+
         Connection conn = new Connection();
         Query query = new Query(conn);
         conn.closeConn();
-        
-        
+
         List<User> rivals = query.getEnemies(player.getName());
-        
+
         odin = new Model.Controller(player, rivals, map, scene, info);
     }
 
@@ -108,15 +171,12 @@ public class MainController {
     }
 
     public boolean isConnStatus() {
-        
+
         Connection conn = new Connection();
         this.connStatus = conn.isCheckConn();
         conn.closeConn();
-        
+
         return this.connStatus;
     }
-    
-    
-    
 
 }

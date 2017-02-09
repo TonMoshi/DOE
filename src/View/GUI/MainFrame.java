@@ -28,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Game game;
     private Stats stats;
     private Menu menu;
+    private User user;
 
     /**
      * Creates new form MainFrame
@@ -60,6 +61,7 @@ public class MainFrame extends javax.swing.JFrame {
         cardo.add(game, "Game");
     }
     public void showMainPanel(){
+        this.user = null;
         card.show(cardo, "MainPanel");    
     }
     public void showStats(){
@@ -68,6 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
         card.show(cardo, "Stats");
     }
     public void showMenu(String user){
+        this.user = mc.getUser(user);
         menu.setUser(user);
         card.show(cardo, "Menu");
     }    
@@ -77,6 +80,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainController getMc() {
         return mc;
+    }
+
+    public User getUser() {
+        return user;
     }
     
     
