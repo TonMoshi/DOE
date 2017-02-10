@@ -80,13 +80,14 @@ public class Query {
     }
 
     public ArrayList getAllies(String player) {
-        ArrayList list = new ArrayList();
+        ArrayList<User> list = new ArrayList();
         ResultSet rs;
         try {
             stmt = conn.getConn().createStatement();
-            rs = stmt.executeQuery("SELECT Player2 FROM Alliances WHERE Player1='" + player + "'");
+            rs = stmt.executeQuery("SELECT name, email, password, win, plays FROM Alliances, user WHERE Player1='" + player + "' AND Player2 = name");
             while (rs.next()) {
-                list.add(rs.getString("Player2"));
+                list.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("wins")),
+                        Integer.valueOf(rs.getString("plays"))));
             }
 
         } catch (SQLException ex) {
@@ -101,9 +102,10 @@ public class Query {
         ResultSet rs;
         try {
             stmt = conn.getConn().createStatement();
-            rs = stmt.executeQuery("SELECT Player2 FROM Enemies WHERE Player1='" + player + "'");
+            rs = stmt.executeQuery("SELECT name, email, password, win, plays FROM Enemies, user WHERE Player1='" + player + "' AND Player2 = name");
             while (rs.next()) {
-                list.add(rs.getString("Player2"));
+                list.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("wins")),
+                        Integer.valueOf(rs.getString("plays"))));
             }
 
         } catch (SQLException ex) {

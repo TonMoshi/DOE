@@ -47,7 +47,7 @@ public class MainController {
         User user = query.getUser(name);
 
         conn.closeConn();
-        if (user.getName() == null) {
+        if (user == null) {
             return false;
 
         } else {
@@ -83,6 +83,24 @@ public class MainController {
         List<User> users = query.getUsers();
         conn.closeConn();
         return users;
+    }
+    
+    public List<User> getAllies(User user){
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        List<User> allies = query.getAllies(user.getName());
+        conn.closeConn();
+        return allies;
+    
+    }
+    
+    public List<User> getEnemies(User user){
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        List<User> enemies = query.getEnemies(user.getName());
+        conn.closeConn();
+        return enemies;
+    
     }
 
     public User getUser(String userName) {
@@ -159,10 +177,8 @@ public class MainController {
 
         Connection conn = new Connection();
         Query query = new Query(conn);
-        conn.closeConn();
-
         List<User> rivals = query.getEnemies(player.getName());
-
+        conn.closeConn();
         odin = new Model.Controller(player, rivals, map, scene, info);
     }
 

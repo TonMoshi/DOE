@@ -55,11 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         aFrame.setSize(screenSize.width, screenSize.height);
     }
     
-    public void createGame(User player, List<User> rivals){
-        this.game = new Game(player, rivals);
-        mc.startControllerModel(player, this.game);
-        cardo.add(game, "Game");
-    }
+
     public void showMainPanel(){
         this.user = null;
         card.show(cardo, "MainPanel");    
@@ -75,6 +71,9 @@ public class MainFrame extends javax.swing.JFrame {
         card.show(cardo, "Menu");
     }    
     public void showGame(){
+        this.game = new Game(user, mc.getEnemies(user), this);
+        mc.startControllerModel(user, this.game);
+        cardo.add(game, "Game");
         card.show(cardo,"Game");
     }
 

@@ -33,7 +33,7 @@ public class Game extends javax.swing.JPanel {
     /**
      * Creates new form Game
      */
-    public Game(User user, List<User> rivals) {
+    public Game(User user, List<User> rivals, MainFrame mf) {
         initComponents();
         GWindow window = new GWindow(Color.BLACK);
         jPDraw.add(window.getCanvas());
@@ -41,7 +41,7 @@ public class Game extends javax.swing.JPanel {
         GScene scene = new GScene(window);
         window.getCanvas().setPreferredSize(new Dimension(40 * Cell.SIDE, 30 * Cell.SIDE));
         // Create the graphics object and add to the scene
-        Model.Terrain.Map map = new Model.Terrain.Map(40 * Cell.SIDE, 30 * Cell.SIDE);
+        Model.Terrain.Map map = new Model.Terrain.Map(40, 30);
         scene.add(map.getRep());
         info = new InfoGame(Model.Buildings.CityHall.MAXLIFE);
         g = new Model.Game(user, rivals, map, scene, info);
