@@ -165,22 +165,22 @@ public class MainController {
 
     }
 
-    public void startControllerModel(User player, JPanel panel) {
-        Map map = new Map(1, 1);
-
-        GWindow window = new GWindow();
-        window.getCanvas().setPreferredSize(new Dimension(1000, 1000));
-        panel.add(window.getCanvas());
-        GScene scene = new GScene(window);
-
-        InfoGame info = new InfoGame(1000);
-
-        Connection conn = new Connection();
-        Query query = new Query(conn);
-        List<User> rivals = query.getEnemies(player.getName());
-        conn.closeConn();
-        odin = new Model.Controller(player, rivals, map, scene, info);
-    }
+//    public void startControllerModel(User player, JPanel panel) {
+//        Map map = new Map(1, 1);
+//
+//        GWindow window = new GWindow();
+//        window.getCanvas().setPreferredSize(new Dimension(1000, 1000));
+//        panel.add(window.getCanvas());
+//        GScene scene = new GScene(window);
+//
+//        InfoGame info = new InfoGame(1000);
+//
+//        Connection conn = new Connection();
+//        Query query = new Query(conn);
+//        List<User> rivals = query.getEnemies(player.getName());
+//        conn.closeConn();
+//        odin = new Model.Controller(player, rivals, map, scene, info);
+//    }
 
     public Controller getOdin() {
         return odin;

@@ -72,7 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
     }    
     public void showGame(){
         this.game = new Game(user, mc.getEnemies(user), this);
-        mc.startControllerModel(user, this.game);
+//        mc.startControllerModel(user, this.game);
         cardo.add(game, "Game");
         card.show(cardo,"Game");
     }

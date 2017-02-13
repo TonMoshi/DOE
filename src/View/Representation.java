@@ -5,15 +5,32 @@
  */
 package View;
 
+import no.geosoft.cc.graphics.GImage;
 import no.geosoft.cc.graphics.GObject;
+import no.geosoft.cc.graphics.GSegment;
 
 /**
  *
  * @author dam2
  */
 public class Representation  extends GObject{
+    
+    private GImage img;
     private int X;
     private int Y;
+    private GSegment Rep;
+    
+    public Representation(){
+        Rep = new GSegment();
+        addSegment(Rep);
+    
+    }
+
+    @Override
+    public void draw() {
+        Rep.setGeometry (X, Y);
+    }
+    
     
     
     public void setX(int x){
@@ -31,5 +48,11 @@ public class Representation  extends GObject{
     public int getY(){
         return Y;
     }
+
+    public void setImg(GImage img) {
+        this.img = img;
+        Rep.setImage(this.img);
+    }
+    
     
 }

@@ -77,7 +77,7 @@ public class Controller {
                 while(x<n*4){
                     nextPosBP.add(x);
                     nextPosBP.add(y);
-                    x = x+ 4;
+                    x = x+4;
                 }
                 while(y>=1){
                     nextPosBP.add(x);
