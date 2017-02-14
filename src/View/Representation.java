@@ -5,6 +5,7 @@
  */
 package View;
 
+import View.Terrain.Map;
 import no.geosoft.cc.graphics.GImage;
 import no.geosoft.cc.graphics.GObject;
 import no.geosoft.cc.graphics.GSegment;
@@ -28,7 +29,12 @@ public class Representation  extends GObject{
 
     @Override
     public void draw() {
-        Rep.setGeometry (X, Y);
+//        if (this instanceof Map) {
+            Rep.setGeometry (Map.getPoint(X, Y).getX(), Map.getPoint(X, Y).getY());
+//        }else{
+//            Rep.setGeometry (Map.getPoint(X, Y).getX(), Map.getPoint(X, Y).getY());
+//        }
+        
     }
     
     

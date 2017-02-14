@@ -17,7 +17,7 @@ import no.geosoft.cc.graphics.GStyle;
  */
 public class Map extends Representation {
 
-    private Point[][] mapGrid;
+    private static Point[][] mapGrid;
     private Cell[][] cellGrid;
     private double w, h;
     private GSegment map;
@@ -28,18 +28,13 @@ public class Map extends Representation {
         super.setX(w);
         super.setY(h);
         this.numCasX = w / Cell.SIDE;
+        if(this.numCasX > 33)this.numCasX = 33;
         this.numCasY = h / Cell.SIDE;
+        if(this.numCasY > 17)this.numCasY = 17;
         mapGrid = new Point[numCasX][numCasY];
         cellGrid = new Cell[numCasX][numCasY];
         makeGrids();
         
-//        map = new GSegment();
-//        GStyle mapStyle = new GStyle();
-//        mapStyle.setForegroundColor(new Color(0, 0, 0));
-//        mapStyle.setBackgroundColor(new Color(244, 66, 66));
-//        mapStyle.setLineWidth(0);
-//        map.setStyle(mapStyle);
-//        addSegment(map);
     }
     
     public void makeGrids() {
@@ -51,7 +46,6 @@ public class Map extends Representation {
                 mapGrid[j][i] = new Point(auX, auY);
                 cellGrid[j][i] = new Cell((int)auX, (int)auY);
                 add(cellGrid[j][i]);
-                
                 auX += 51;
             }
             auX = 30;
@@ -59,7 +53,7 @@ public class Map extends Representation {
         }
     }
     
-    public Point getPoint(int x, int y){
+    public static Point getPoint(int x, int y){
         
         return mapGrid[x][y];
     }
@@ -74,6 +68,7 @@ public class Map extends Representation {
 
     @Override
     public void draw() {
+        super.draw();
 //        map.setGeometry(Geometry.createRectangle(0, 0, super.getX(), super.getY()));
         
 //        for (int i = 0; i < mapGrid.length; i++) {

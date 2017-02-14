@@ -6,7 +6,7 @@
 package View.Buildings;
 
 import View.Representation;
-import no.geosoft.cc.graphics.GObject;
+
 
 /**
  *

@@ -5,6 +5,7 @@
  */
 package View.GUI;
 
+import Model.Users.User;
 import View.CustomElements.HintPasswordField;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -86,6 +87,7 @@ public class MainPanel extends javax.swing.JPanel {
         User = new javax.swing.JLabel();
         Error = new javax.swing.JLabel();
         PasswordIn = new HintPasswordField("Contraseña");
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -211,6 +213,17 @@ public class MainPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         add(PasswordIn, gridBagConstraints);
+
+        jButton1.setText("Trick");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        add(jButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
@@ -340,6 +353,13 @@ public class MainPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_UserNameTextActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        mainFrame.setUser(new User("test", "testMail", "testPass", 0 , 0));
+        mainFrame.showGame();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Email;
@@ -354,6 +374,7 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JLabel User;
     private javax.swing.JLabel UserName;
     private javax.swing.JTextField UserNameText;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
