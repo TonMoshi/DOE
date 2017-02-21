@@ -6,6 +6,7 @@
 package View.GUI;
 
 import Controller.MainController;
+import Controller.TableEnemies;
 import Controller.TableInfo;
 import Model.Users.User;
 import java.awt.CardLayout;
@@ -79,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     }
     public void showNewGame(){
-        this.ng = new NewGame(mc.getEnemies(user), this);
+        this.ng = new NewGame(this, new TableEnemies(this));
         cardo.add(ng, "NewGame");
         card.show(cardo, "NewGame");
     }

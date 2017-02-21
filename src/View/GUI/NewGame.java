@@ -5,6 +5,7 @@
  */
 package View.GUI;
 
+import Controller.TableEnemies;
 import Model.Users.User;
 import java.util.List;
 
@@ -16,14 +17,17 @@ public class NewGame extends javax.swing.JPanel {
 
     private List<User> enemies;
     private MainFrame mf;
+    private TableEnemies te;
     /**
      * Creates new form NewGame
      */
-    public NewGame(List<User> enemies, MainFrame mf) {
+    public NewGame(MainFrame mf, TableEnemies te) {
         initComponents();
         
         this.enemies = enemies;
         this.mf = mf;
+        this.te = te;
+        InnerTable.setModel(te);
         this.mf.showGame(enemies);
         
         
@@ -37,20 +41,49 @@ public class NewGame extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        table = new javax.swing.JScrollPane();
+        InnerTable = new javax.swing.JTable();
+        Enviar = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+
+        setLayout(new java.awt.GridBagLayout());
+
+        InnerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.setViewportView(InnerTable);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        add(table, gridBagConstraints);
+
+        Enviar.setText("Enviar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        add(Enviar, gridBagConstraints);
+
+        jComboBox1.setMaximumRowCount(4);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(jComboBox1, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Enviar;
+    private javax.swing.JTable InnerTable;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JScrollPane table;
     // End of variables declaration//GEN-END:variables
 }
