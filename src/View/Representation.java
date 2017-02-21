@@ -29,16 +29,17 @@ public class Representation  extends GObject{
 
     @Override
     public void draw() {
-//        if (this instanceof Map) {
-            Rep.setGeometry (Map.getPoint(X, Y).getX(), Map.getPoint(X, Y).getY());
-//        }else{
-//            Rep.setGeometry (Map.getPoint(X, Y).getX(), Map.getPoint(X, Y).getY());
-//        }
+        if (this instanceof Map) {
+            Rep.setGeometry (X, Y);
+        }else{
+            int auX = Map.getPoint(X, Y).getX();
+            int auY = Map.getPoint(X, Y).getY();
+            Rep.setGeometry (auX, auY);
+//            Rep.setGeometry (X, Y);
+        }
         
     }
-    
-    
-    
+
     public void setX(int x){
         this.X = x;
     }

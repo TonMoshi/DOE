@@ -22,7 +22,7 @@ public class CityHall extends Building{
         this.x = x;
         this.y = y;
         this.z = z;
- //       setters(x,y,z);
+        setters(x,y,z);
     }
     
     public void setters(int x, int y, int z){

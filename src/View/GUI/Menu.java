@@ -103,7 +103,7 @@ public class Menu extends javax.swing.JPanel {
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
         // TODO add your handling code here:
         
-        mf.showGame();
+        mf.showNewGame();
     }//GEN-LAST:event_PlayActionPerformed
 
     private void StatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatsActionPerformed

@@ -59,7 +59,7 @@ public class Controller {
     
     
     public void setInitialScenario(){
-        GameObj gO = new CityHall(1, 1, player);
+        GameObj gO = new CityHall(0, 0, player);
         info.setLifeCityHall(gO.getLife());
         nextPosB();
         map.addGameObj(gO);

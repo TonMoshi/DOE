@@ -29,6 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Stats stats;
     private Menu menu;
     private User user;
+    private NewGame ng;
 
     /**
      * Creates new form MainFrame
@@ -69,12 +70,18 @@ public class MainFrame extends javax.swing.JFrame {
         this.user = mc.getUser(user);
         menu.setUser(user);
         card.show(cardo, "Menu");
-    }    
-    public void showGame(){
-        this.game = new Game(user, mc.getEnemies(user), this);
+    }
+    public void showGame(List<User> enemies){
+        this.game = new Game(user, enemies, this);
 //        mc.startControllerModel(user, this.game);
         cardo.add(game, "Game");
         card.show(cardo,"Game");
+    
+    }
+    public void showNewGame(){
+        this.ng = new NewGame(mc.getEnemies(user), this);
+        cardo.add(ng, "NewGame");
+        card.show(cardo, "NewGame");
     }
 
     public MainController getMc() {

@@ -9,14 +9,9 @@ import Utilities.Cipher;
 import Model.BBDD.Connection;
 import Model.BBDD.Query;
 import Model.Controller;
-import Model.Terrain.Map;
 import Model.Users.User;
-import View.InfoGame;
-import java.awt.Dimension;
 import java.util.List;
-import javax.swing.JPanel;
-import no.geosoft.cc.graphics.GScene;
-import no.geosoft.cc.graphics.GWindow;
+
 
 /**
  *

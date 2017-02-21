@@ -6,10 +6,7 @@
 package View.Terrain;
 
 import View.Representation;
-import java.awt.Color;
-import no.geosoft.cc.geometry.Geometry;
 import no.geosoft.cc.graphics.GSegment;
-import no.geosoft.cc.graphics.GStyle;
 
 /**
  *
@@ -19,16 +16,15 @@ public class Map extends Representation {
 
     private static Point[][] mapGrid;
     private Cell[][] cellGrid;
-    private double w, h;
     private GSegment map;
     int numCasX, numCasY;
 
     public Map(int w, int h) {
         super();
-        super.setX(w);
-        super.setY(h);
+//        super.setX(w);
+//        super.setY(h);
         this.numCasX = w / Cell.SIDE;
-        if(this.numCasX > 33)this.numCasX = 33;
+        if(this.numCasX > 32)this.numCasX = 32;
         this.numCasY = h / Cell.SIDE;
         if(this.numCasY > 17)this.numCasY = 17;
         mapGrid = new Point[numCasX][numCasY];
@@ -41,10 +37,11 @@ public class Map extends Representation {
 
         float auX = 30;
         float auY = 30;
-        for (int i = 1; i < numCasY; i++) {
-            for (int j = 1; j < numCasX; j++) {
-                mapGrid[j][i] = new Point(auX, auY);
-                cellGrid[j][i] = new Cell((int)auX, (int)auY);
+        for (int i = 0; i < numCasY; i++) {
+            for (int j = 0; j < numCasX; j++) {
+                mapGrid[j][i] = new Point((int)auX, (int)auY);
+                cellGrid[j][i] = new Cell(j, i);
+                //cellGrid[j][i] = new Cell((int)auX, (int)auY);
                 add(cellGrid[j][i]);
                 auX += 51;
             }
@@ -69,30 +66,23 @@ public class Map extends Representation {
     @Override
     public void draw() {
         super.draw();
-//        map.setGeometry(Geometry.createRectangle(0, 0, super.getX(), super.getY()));
-        
-//        for (int i = 0; i < mapGrid.length; i++) {
-//            for (int j = 0; j < mapGrid[0].length; j++) {
-//                
-//            }
-//        }
     }
     
     //Inner Class Point
     public class Point{
-        private final float X;
-        private final float Y;
+        private final int X;
+        private final int Y;
         
-        public Point(float x, float y){
+        public Point(int x, int y){
             this.X = x;
             this.Y = y;
         }
 
-        public float getX() {
+        public int getX() {
             return X;
         }
 
-        public float getY() {
+        public int getY() {
             return Y;
         }
         
