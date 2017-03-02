@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,15 +85,25 @@ public class Query {
         ResultSet rs;
         try {
             stmt = conn.getConn().createStatement();
-            rs = stmt.executeQuery("SELECT name, email, password, win, plays FROM Alliances, user WHERE Player1='" + player + "' AND Player2 = name");
+            rs = stmt.executeQuery("SELECT name, email, password, win, plays FROM Alliances e, user u WHERE e.Player1='" + player + "' AND e.Player2 = u.name AND u.name = e.Player2");
             while (rs.next()) {
-                list.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("wins")),
+                list.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("win")),
                         Integer.valueOf(rs.getString("plays"))));
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        Collections.sort(list, (User o1, User o2) -> {
+            if (o1.getWinRatio() > o2.getWinRatio()) {
+                return -1;
+            } else if (o1.getWinRatio() == o2.getWinRatio()) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
 
         return list;
     }
@@ -102,15 +113,25 @@ public class Query {
         ResultSet rs;
         try {
             stmt = conn.getConn().createStatement();
-            rs = stmt.executeQuery("SELECT name, email, password, win, plays FROM Enemies, user WHERE Player1='" + player + "' AND Player2 = name");
+            rs = stmt.executeQuery("SELECT name, email, password, win, plays FROM Enemies e, user u WHERE e.Player1='" + player + "' AND e.Player2 = u.name AND u.name = e.Player2");
             while (rs.next()) {
-                list.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("wins")),
+                list.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("win")),
                         Integer.valueOf(rs.getString("plays"))));
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        Collections.sort(list, (User o1, User o2) -> {
+            if (o1.getWinRatio() > o2.getWinRatio()) {
+                return -1;
+            } else if (o1.getWinRatio() == o2.getWinRatio()) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
 
         return list;
     }

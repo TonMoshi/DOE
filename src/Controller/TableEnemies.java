@@ -7,7 +7,6 @@ package Controller;
 
 import Model.Users.User;
 import View.GUI.MainFrame;
-import java.util.Collections;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,37 +14,91 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author dam2
  */
-public class TableEnemies extends AbstractTableModel{
-    
-    private List<User> users;
+public class TableEnemies extends AbstractTableModel {
+
+    private List<User> enemies;
+    private boolean[] players;
     private MainFrame mf;
-    
+
     public TableEnemies(MainFrame mf) {
-        this.users = mf.getMc().getEnemies(mf.getUser());
-        Collections.sort(users, (User o1, User o2) -> {
-            if (o1.getWinRatio() > o2.getWinRatio()) {
-                return -1;
-            } else if (o1.getWinRatio() == o2.getWinRatio()) {
-                return 0;
-            } else {
-                return 1;
-            }
-        });
+        this.mf = mf;
+        this.enemies = mf.getUser().getEnemies();
+        players = new boolean[enemies.size()];
     }
 
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return enemies.size()+1;
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 2;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (rowIndex == 0) {
+            switch (columnIndex) {
+                case 0:
+                    return mf.getUser().getName();
+                case 1:
+                    return true;
+                default:
+                    throw new AssertionError();
+            }
+        } else {
+            switch (columnIndex) {
+                case 0:
+                    return enemies.get(rowIndex-1).getName();
+                case 1:
+                    return players[rowIndex-1];
+                default:
+                    throw new AssertionError();
+            }
+
+        }
+
     }
-    
+
+    @Override
+    public String getColumnName(int column) {
+        switch (column) {
+            case 0:
+
+                return "Nombre";
+            case 1:
+
+                return "Seleccionar";
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 1:
+                return Boolean.class;      
+        default:
+            return String.class;
+            }
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        if (row == 0) {
+            return false;
+        }
+        return column == 1;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int row, int column) {
+        if (aValue instanceof Boolean && column == 1) {
+            players[row-1] = (Boolean)aValue;
+            fireTableCellUpdated(row, column);
+        }
+    }
+
 }

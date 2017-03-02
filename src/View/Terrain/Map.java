@@ -26,7 +26,7 @@ public class Map extends Representation {
         this.numCasX = w / Cell.SIDE;
         if(this.numCasX > 32)this.numCasX = 32;
         this.numCasY = h / Cell.SIDE;
-        if(this.numCasY > 17)this.numCasY = 17;
+        if(this.numCasY > 16)this.numCasY = 16;
         mapGrid = new Point[numCasX][numCasY];
         cellGrid = new Cell[numCasX][numCasY];
         makeGrids();

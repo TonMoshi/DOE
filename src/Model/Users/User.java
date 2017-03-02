@@ -63,6 +63,16 @@ public class User implements Comparable<Model.Users.User>{
         return pass;
     }
 
+    public List<User> getEnemies() {
+        return enemies;
+    }
+
+    public List<User> getAllies() {
+        return allies;
+    }
+    
+    
+
     public void setPass(String pass) {
         this.pass = pass;
     }    
@@ -74,6 +84,15 @@ public class User implements Comparable<Model.Users.User>{
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setEnemies(List<User> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setAllies(List<User> allies) {
+        this.allies = allies;
+    }
+    
 
     public void newWin() {
         this.win = win++;

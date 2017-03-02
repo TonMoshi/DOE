@@ -7,7 +7,9 @@ package View.GUI;
 
 import Controller.TableEnemies;
 import Model.Users.User;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,11 +26,11 @@ public class NewGame extends javax.swing.JPanel {
     public NewGame(MainFrame mf, TableEnemies te) {
         initComponents();
         
-        this.enemies = enemies;
+        enemies = new ArrayList<User>();
         this.mf = mf;
         this.te = te;
         InnerTable.setModel(te);
-        this.mf.showGame(enemies);
+        
         
         
     }
@@ -46,7 +48,7 @@ public class NewGame extends javax.swing.JPanel {
         table = new javax.swing.JScrollPane();
         InnerTable = new javax.swing.JTable();
         Enviar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -61,7 +63,9 @@ public class NewGame extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        InnerTable.setMaximumSize(new java.awt.Dimension(0, 0));
         table.setViewportView(InnerTable);
+        InnerTable.setPreferredScrollableViewportSize(InnerTable.getPreferredSize());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -69,21 +73,44 @@ public class NewGame extends javax.swing.JPanel {
         add(table, gridBagConstraints);
 
         Enviar.setText("Enviar");
+        Enviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnviarActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         add(Enviar, gridBagConstraints);
 
-        jComboBox1.setMaximumRowCount(4);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new java.awt.GridBagConstraints());
+        jLabel1.setText("Jugadores:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        add(jLabel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
+        // TODO add your handling code here:        
+        List<User> enemiesAux = mf.getUser().getEnemies();
+        boolean token;
+        for (int i = 0; i < enemiesAux.size(); i++) {
+            if ((boolean) InnerTable.getValueAt(i+1, 1)) {
+                enemies.add(enemiesAux.get(i));
+            }
+        }
+        if (!(enemies == null)) {
+            mf.showGame(enemies);
+        }else{
+            JOptionPane.showMessageDialog(this, "Tienes que elegir al menos un oponente, hasta un máximo de 4.");
+        }
+    }//GEN-LAST:event_EnviarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Enviar;
     private javax.swing.JTable InnerTable;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane table;
     // End of variables declaration//GEN-END:variables
 }

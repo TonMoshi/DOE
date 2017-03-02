@@ -95,6 +95,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void setUser(User user) {
         this.user = user;
+        this.user.setAllies(mc.getAllies(user));
+        this.user.setEnemies(mc.getEnemies(user));
     }
     
     

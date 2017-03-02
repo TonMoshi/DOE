@@ -356,7 +356,8 @@ public class MainPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        mainFrame.setUser(new User("test", "testMail", "testPass", 0 , 0));        
+        mainFrame.setUser(new User("test", "testMail", "testPass", 0 , 0));
+        mainFrame.showNewGame();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

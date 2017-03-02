@@ -60,12 +60,12 @@ public class GameObj {
 
     public void setX(int x) {
         this.x = x;
-        this.rep.setX(x*Cell.SIDE);
+        this.rep.setX(x);
     }
 
     public void setY(int y) {
         this.y = y;
-        this.rep.setY(y*Cell.SIDE);
+        this.rep.setY(y);
     }   
 
     public GObject getRep() {

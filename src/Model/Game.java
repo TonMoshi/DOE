@@ -94,7 +94,7 @@ public class Game{
     public void build(int unit){
         switch(unit){
             case 0://Builder
-                build(zeus.getPlayer(), new Model.Units.Builder(0, 0, zeus.getPlayer()));
+                build(zeus.getPlayer(), new Model.Units.Builder(2, 2, zeus.getPlayer()));
                 break;
             case 1://Warrior
                 build(zeus.getPlayer(), new Model.Units.Warrior(0, 0, zeus.getPlayer()));
