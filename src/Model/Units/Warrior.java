@@ -22,13 +22,13 @@ public class Warrior extends GOAttacker implements Movable{
 
     @Override
     public int move(int nX, int nY) {
-        if(nX != x){
+        if(nX != this.rep.getX()){
             this.rep.setX(this.rep.getX()+ Integer.signum(nX-x));
             if(this.rep.getX()%Cell.SIDE==0){
                 x = x+ Integer.signum(nX-x);
             }
         }
-        if(nY != y){
+        if(nY != this.rep.getY()){
             this.rep.setY(this.rep.getY()+ Integer.signum(nY-y));
             if(this.rep.getY()%Cell.SIDE==0){
                 y = y+ Integer.signum(nY-y);

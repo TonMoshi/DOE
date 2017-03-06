@@ -8,7 +8,6 @@ package Model.Units;
 import Model.GOBuilder;
 import Model.Movable;
 import Model.Users.User;
-import View.Terrain.Cell;
 
 /**
  *

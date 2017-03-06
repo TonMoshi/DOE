@@ -7,7 +7,6 @@ package Model;
 
 import Model.Users.User;
 import View.Representation;
-import View.Terrain.Cell;
 import no.geosoft.cc.graphics.GObject;
 
 /**
