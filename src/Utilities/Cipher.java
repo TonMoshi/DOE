@@ -20,16 +20,16 @@ public class Cipher {
 
     private String ciphrable;
 
-    public Cipher(String ciphrable) {
+    public Cipher(String ciphrable) throws UnsupportedEncodingException {
 
         try {
 
             MessageDigest md;
             md = MessageDigest.getInstance("MD5");
-            //md.update(ciphrable.getBytes("UTF-8"));
+            md.update(ciphrable.getBytes("UTF-8"));
             byte[] digest = md.digest();
 
-            StringBuffer hexString = new StringBuffer();            
+            StringBuffer hexString = new StringBuffer();  
 
             for (int i = 0; i < digest.length; i++) {
                 if ((0xff & digest[i]) < 0x10) {

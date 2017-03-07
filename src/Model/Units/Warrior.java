@@ -8,7 +8,6 @@ package Model.Units;
 import Model.GOAttacker;
 import Model.Movable;
 import Model.Users.User;
-import View.Terrain.Cell;
 
 /**
  *
@@ -22,23 +21,27 @@ public class Warrior extends GOAttacker implements Movable{
 
     @Override
     public int move(int nX, int nY) {
-        if(nX != this.rep.getX()){
-            this.rep.setX(this.rep.getX()+ Integer.signum(nX-x));
-            if(this.rep.getX()%Cell.SIDE==0){
-                x = x+ Integer.signum(nX-x);
-            }
+        int auxX = this.rep.getX();
+        if(nX != auxX){
+            this.rep.setX(auxX+ Integer.signum(nX-auxX));
+//            if(this.rep.getX()%Cell.SIDE==0){
+//                x = x+ Integer.signum(nX-x);
+//            }
         }
-        if(nY != this.rep.getY()){
-            this.rep.setY(this.rep.getY()+ Integer.signum(nY-y));
-            if(this.rep.getY()%Cell.SIDE==0){
-                y = y+ Integer.signum(nY-y);
-            }
+        int auxY = this.rep.getY();
+        if(nY != auxY){
+            this.rep.setY(auxY+ Integer.signum(nY-auxY));
+//            if(this.rep.getY()%Cell.SIDE==0){
+//                y = y+ Integer.signum(nY-y);
+//            }
         }
         return 0;
     }
 
     @Override
     public boolean reach(int nX, int nY) {
-        return (nX==x && nY == y);
+        int auxX = this.rep.getX();
+        int auxY = this.rep.getY();
+        return (nX==auxX && nY == auxY);
     }
 }

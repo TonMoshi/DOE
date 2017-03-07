@@ -34,12 +34,6 @@ public class Map extends Representation {
         mapGrid = new Point[numCasX][numCasY];
         cellGrid = new Cell[numCasX][numCasY];
         makeGrids();
-//        for (int i = 0; i < mapGrid.length; i++) {
-//            for (int j = 0; j < mapGrid[0].length; j++) {
-//                System.out.print(i+" "+j+" X: "+mapGrid[i][j].getX()+" Y: "+mapGrid[i][j].getY()+" -- ");
-//            }
-//            System.out.println("/");
-//        }
 
     }
 
@@ -66,11 +60,11 @@ public class Map extends Representation {
     }
 
     public int getNumCasX() {
-        return numCasX;
+        return numCasX -1;
     }
 
     public int getNumCasY() {
-        return numCasY;
+        return numCasY -1;
     }
 
     @Override

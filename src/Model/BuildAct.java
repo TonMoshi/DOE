@@ -5,8 +5,6 @@
  */
 package Model;
 
-import View.Terrain.Cell;
-import java.util.List;
 
 /**
  *

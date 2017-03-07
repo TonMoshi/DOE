@@ -20,7 +20,7 @@ import no.geosoft.cc.graphics.GScene;
  */
 public class Game{
     private AttAct ares;
-    private DieAct ades;
+    private DieAct hades;
     private MoveAct hermes;
     private BuildAct orfeo;
     private ShowAct apolo;
@@ -44,7 +44,7 @@ public class Game{
     public Game(User player, List<User> rivals, Map map, GScene scene, InfoGame info) {
         this.info = info;
         zeus = new Controller(player, rivals, map, scene, info);
-        ades = new DieAct(zeus);
+        hades = new DieAct(zeus);
         hermes = new MoveAct(zeus);
         orfeo = new BuildAct(zeus);
         ares = new AttAct(zeus);
@@ -60,33 +60,38 @@ public class Game{
     }
     
     public void moveUnits(int move){
+        int X = zeus.getMap().getNumCasillasX();
+        int Y = zeus.getMap().getNumCasillasY();
         switch(move){
-            case 0://CENTER
-                moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()/2,zeus.getMap().getNumCasillasY()/2);
+            case 0://CENTER                
+                moveUnits(zeus.getPlayer(), X/2,Y/2);
                 break;
             case 1://UP
-                moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()/2,0);
+                moveUnits(zeus.getPlayer(), X/2,0);
                 break;
-            case 2://DOWN
-                moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()/2,zeus.getMap().getNumCasillasY()-1);
+            case 2://DOWN                
+                moveUnits(zeus.getPlayer(), X/2,Y);
                 break;
             case 3://LEFT
-                moveUnits(zeus.getPlayer(), 0,zeus.getMap().getNumCasillasY()/2);
+                moveUnits(zeus.getPlayer(), 0,Y/2);
                 break;
             case 4://RIGHT
-                moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()-1,zeus.getMap().getNumCasillasY()/2);
+                moveUnits(zeus.getPlayer(), X,Y/2);
                 break;
             case 5://UL
                 moveUnits(zeus.getPlayer(), 0, 0);
                 break;
             case 6://UR
-                moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()-1,0);
+                //moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()-1,0);
+                moveUnits(zeus.getPlayer(), X,0);
                 break;
             case 7://DL
-                moveUnits(zeus.getPlayer(), 0,zeus.getMap().getNumCasillasY()-1);
+                //moveUnits(zeus.getPlayer(), 0,zeus.getMap().getNumCasillasY()-1);
+                moveUnits(zeus.getPlayer(), 0,Y);
                 break;
             case 8://DR
-                moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()-1,zeus.getMap().getNumCasillasY()-1);
+                //moveUnits(zeus.getPlayer(), zeus.getMap().getNumCasillasX()-1,zeus.getMap().getNumCasillasY()-1);
+                moveUnits(zeus.getPlayer(), X,Y);
                 break;
         }
     }
@@ -121,17 +126,17 @@ public class Game{
     }
     
     public int getXLimit(){
-        return zeus.getMap().getNumCasillasX();
+        return zeus.getMap().getNumCasillasX()-1;
     }
     
     public int getYLimit(){
-        return zeus.getMap().getNumCasillasY();
+        return zeus.getMap().getNumCasillasY()-1;
     }
     
     public void loop(){        
             //Condici�n de fin de partida
 	    ares.run();
-            ades.run();
+            hades.run();
             hermes.run();
             orfeo.run();
             apolo.run();

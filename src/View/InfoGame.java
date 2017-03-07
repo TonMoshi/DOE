@@ -52,7 +52,6 @@ public class InfoGame {
 
         synchronized (l) {
 
-            l.wait();
             l.get(0).setText(String.valueOf(LifeCityHall));
             l.get(1).setText(String.valueOf(warriors));
             l.get(2).setText(String.valueOf(builders));

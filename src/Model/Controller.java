@@ -53,8 +53,8 @@ public class Controller {
         this.posObjBul = new ArrayList<>();
         this.buildProgress = new ArrayList<>();
         this.nextPosBP = new ArrayList<>();
-        initX = new int[]{map.getNumCasillasX()-2,map.getNumCasillasX()-2,1};
-        initY = new int[]{map.getNumCasillasY()-2,1,map.getNumCasillasY()-2};
+        initX = new int[]{map.getNumCasillasX()-1,map.getNumCasillasX()-1,1};
+        initY = new int[]{map.getNumCasillasY()-1,1,map.getNumCasillasY()-1};
     }
     
     
