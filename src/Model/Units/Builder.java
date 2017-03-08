@@ -21,16 +21,16 @@ public class Builder extends GOBuilder implements Movable{
 
     @Override
     public int move(int nX, int nY) {
-        int auxX = this.rep.getX();
+        int auxX = getX();
         if(nX != auxX){
-            this.rep.setX(auxX+ Integer.signum(nX-auxX));
+            setX(auxX+ Integer.signum(nX-auxX));
 //            if(this.rep.getX()%Cell.SIDE==0){
 //                x = x+ Integer.signum(nX-x);
 //            }
         }
         int auxY = this.rep.getY();
         if(nY != auxY){
-            this.rep.setY(auxY+ Integer.signum(nY-auxY));
+            setY(auxY+ Integer.signum(nY-auxY));
 //            if(this.rep.getY()%Cell.SIDE==0){
 //                y = y+ Integer.signum(nY-y);
 //            }
@@ -40,8 +40,8 @@ public class Builder extends GOBuilder implements Movable{
 
     @Override
     public boolean reach(int nX, int nY) {
-        int auxX = this.rep.getX();
-        int auxY = this.rep.getY();
+        int auxX = getX();
+        int auxY = getY();
         return (nX==auxX && nY == auxY);
     }
 }

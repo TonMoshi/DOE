@@ -21,16 +21,12 @@ import no.geosoft.cc.graphics.GObject;
  * @author Dani
  */
 public class Map{
-    private int Width;
-    private int Heigth;
     private int numCasX;
     private int numCasY;
     private List<GameObj> gamesObjects;
     private GObject rep;
     
     public Map(int w, int h){
-        Width = w;
-        Heigth = h;
         gamesObjects = new ArrayList<GameObj>();
         rep = new View.Terrain.Map(w, h);
         numCasX = ((View.Terrain.Map) rep).getNumCasX();
