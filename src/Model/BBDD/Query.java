@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,18 +61,36 @@ public class Query {
         }
         return list;
     }
+    
+    public ArrayList<User> getUsersNeutral(User u) {
+        ArrayList list = new ArrayList();
+        ResultSet rs;
+        try {
+            stmt = conn.getConn().createStatement();
+            rs = stmt.executeQuery("SELECT * from user WHERE name NOT IN (SELECT Player1 FROM Alliances WHERE player2 = '"+u.getName()+"') AND name NOT IN (SELECT Player1 FROM Enemies WHERE player2 = '"+u.getName()+"') AND name != '"+u.getName()+"'");
+            while (rs.next()) {
+                String[] matrix = new String[3];
+                matrix[0] = rs.getString("name");
+                matrix[1] = rs.getString("win");
+                matrix[2] = rs.getString("plays");
+                list.add(new User(matrix[0], matrix[1], matrix[2]));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     public User getUser(String player) {
         ResultSet rs;
-        int win, plays;
         User user;
-        String[] matrix = new String[3];
         String query = "SELECT * FROM user WHERE name='" + player + "'";
         try {
             stmt = conn.getConn().createStatement();
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                user = new User(rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getInt("win"), rs.getInt("plays"));
+                user = new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), Integer.valueOf(rs.getString("win")),
+                        Integer.valueOf(rs.getString("plays")));
                 return user;
             }
         } catch (SQLException ex) {
@@ -94,7 +113,7 @@ public class Query {
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Collections.sort(list, (User o1, User o2) -> {
             if (o1.getWinRatio() > o2.getWinRatio()) {
                 return -1;
@@ -122,7 +141,7 @@ public class Query {
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Collections.sort(list, (User o1, User o2) -> {
             if (o1.getWinRatio() > o2.getWinRatio()) {
                 return -1;
@@ -213,16 +232,13 @@ public class Query {
 
     }
 
-    
-
     //
     //Modificación/Borrado de Datos
     //
-    
     public boolean setUserName(String name, String actualName) {
         try {
             stmt = conn.getConn().createStatement();
-            String update = "UPDATE user SET name='"+name+"' WHERE name='"+actualName+"'";
+            String update = "UPDATE user SET name='" + name + "' WHERE name='" + actualName + "'";
             stmt.executeUpdate(update);
             conn.getConn().commit();
             return true;
@@ -232,10 +248,69 @@ public class Query {
         }
     }
     
+    public boolean setUserAlly(User u, User e) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String insert = "INSERT INTO Alliances VALUES('"+u.getName()+"','"+ e.getName()+"')";
+            stmt.executeUpdate(insert);
+            conn.getConn().commit();
+            insert = "INSERT INTO Alliances VALUES('"+e.getName()+"','"+ u.getName()+"')";
+            stmt.executeUpdate(insert);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    
+    public boolean setUserEnemy(User u, User e) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String insert = "INSERT INTO Enemies VALUES('"+u.getName()+"','"+ e.getName()+"')";
+            stmt.executeUpdate(insert);
+            conn.getConn().commit();
+            insert = "INSERT INTO Enemies VALUES('"+e.getName()+"','"+ u.getName()+"')";
+            stmt.executeUpdate(insert);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean deleteUserEnemy(User u, User e) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String delete = "DELETE FROM Enemies WHERE Player1='"+e.getName()+"', AND Player2='"+u.getName()+"'";
+            stmt.executeUpdate(delete);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean deleteUserAlly(User u, User e) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String delete = "DELETE FROM Alliances WHERE Player1='"+e.getName()+"', AND Player2='"+u.getName()+"'";
+            stmt.executeUpdate(delete);
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     public boolean setPassword(String password, String name) {
         try {
             stmt = conn.getConn().createStatement();
-            String update = "UPDATE user SET password='"+password+"' WHERE name='"+name+"'";
+            String update = "UPDATE user SET password='" + password + "' WHERE name='" + name + "'";
             stmt.executeUpdate(update);
             conn.getConn().commit();
             return true;
@@ -244,11 +319,11 @@ public class Query {
             return false;
         }
     }
-    
+
     public boolean setEmail(String email, String name) {
         try {
             stmt = conn.getConn().createStatement();
-            String update = "UPDATE user SET email='"+email+"' WHERE name='"+name+"'";
+            String update = "UPDATE user SET email='" + email + "' WHERE name='" + name + "'";
             stmt.executeUpdate(update);
             conn.getConn().commit();
             return true;
@@ -257,6 +332,57 @@ public class Query {
             return false;
         }
     }
+
+    public boolean updateUserMatchWinner(User u, String[] data, List<User> rivals) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String update = "UPDATE user SET win='" + u.getWin() + "', plays='" + u.getPlays() + "' WHERE name='" + u.getName() + "'";
+            stmt.executeUpdate(update);
+            conn.getConn().commit();
+
+            for (int i = 0; i < rivals.size(); i++) {
+                stmt = conn.getConn().createStatement();
+                update = "UPDATE user SET win='" + rivals.get(i).getWin() + "', plays='" + rivals.get(i).getPlays() + "' WHERE name='" + rivals.get(i).getName() + "'";
+                stmt.executeUpdate(update);
+                conn.getConn().commit();
+            }
+
+            String insert = "INSERT INTO MatchInfo VALUES('" + u.getName() + "','" + data[0] + "','" + data[1] + "','" + Integer.parseInt(data[2]) + "','" + Integer.parseInt(data[3]) + "','" + Integer.parseInt(data[4]) + "','" + Integer.parseInt(data[5]) + "')";
+            stmt.executeUpdate(insert);
+
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean updateUserMatchLoser(User u, String[] data, List<User> rivals) {
+        try {
+            stmt = conn.getConn().createStatement();
+            String update = "UPDATE user SET win='" + u.getWin() + "', plays='" + u.getPlays() + "' WHERE name='" + u.getName() + "'";
+            stmt.executeUpdate(update);
+            conn.getConn().commit();
+            
+            for (int i = 0; i < rivals.size(); i++) {
+                stmt = conn.getConn().createStatement();
+                update = "UPDATE user SET win='" + rivals.get(i).getWin() + "', plays='" + rivals.get(i).getPlays() + "' WHERE name='" + rivals.get(i).getName() + "'";
+                stmt.executeUpdate(update);
+                conn.getConn().commit();
+            }
+
+            String insert = "INSERT INTO MatchInfo VALUES('" + u.getName() + "','" + data[0] + "','" + data[1] + "','" + Integer.parseInt(data[2]) + "','" + Integer.parseInt(data[3]) + "','" + Integer.parseInt(data[4]) + "','" + Integer.parseInt(data[5]) + "')";
+            stmt.executeUpdate(insert);
+
+            conn.getConn().commit();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     //
     //Setter de la Conexión
     //

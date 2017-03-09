@@ -6,6 +6,8 @@
 package View.GUI;
 
 import Controller.MainController;
+import Controller.TableDiplomacyAllies;
+import Controller.TableDiplomacyEnemies;
 import Controller.TableEnemies;
 import Controller.TableInfo;
 import Model.Users.User;
@@ -31,6 +33,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Menu menu;
     private User user;
     private NewGame ng;
+    private Diplomacy di;
 
     /**
      * Creates new form MainFrame
@@ -71,6 +74,14 @@ public class MainFrame extends javax.swing.JFrame {
         this.user = mc.getUser(user);
         menu.setUser(user);
         card.show(cardo, "Menu");
+    }
+    public void showMenu(){
+        card.show(cardo, "Menu");
+    }
+    public void showDiplomacy(){
+        this.di = new Diplomacy(this, new TableDiplomacyEnemies(this), new TableDiplomacyAllies(this));
+        cardo.add(di,"Diplomacy");
+        card.show(cardo, "Diplomacy");
     }
     public void showGame(List<User> enemies){
         this.game = new Game(user, enemies, this);

@@ -21,6 +21,7 @@ import no.geosoft.cc.graphics.GScene;
  * @author Dani
  */
 public class Controller {
+
     private User player;
     private List<Integer> nextPosBP;
     private List<User> rivals;
@@ -35,9 +36,10 @@ public class Controller {
     private List<Integer> posObjBul;
     private List<Integer> buildProgress;
     private InfoGame info;
-    
-    public static int [] initX;
-    public static int [] initY;
+    private int FinalToken;
+
+    public static int[] initX;
+    public static int[] initY;
 
     public Controller(User player, List<User> rivals, Map map, GScene scene, InfoGame info) {
         this.info = info;
@@ -53,43 +55,46 @@ public class Controller {
         this.posObjBul = new ArrayList<>();
         this.buildProgress = new ArrayList<>();
         this.nextPosBP = new ArrayList<>();
-        initX = new int[]{map.getNumCasillasX()-1,map.getNumCasillasX()-1,1};
-        initY = new int[]{map.getNumCasillasY()-1,1,map.getNumCasillasY()-1};
+        initX = new int[]{map.getNumCasillasX() - 1, map.getNumCasillasX() - 1, 1};
+        initY = new int[]{map.getNumCasillasY() - 1, 1, map.getNumCasillasY() - 1};
     }
-    
-    
-    public void setInitialScenario(){
+
+    public void setInitialScenario() {
         GameObj gO = new CityHall(1, 1, player);
         info.setLifeCityHall(gO.getLife());
         nextPosB();
         map.addGameObj(gO);
-        for(int i=0;i<rivals.size();i++){
+        for (int i = 0; i < rivals.size(); i++) {
             gO = new CityHall(initX[i], initY[i], rivals.get(i));
             map.addGameObj(gO);
         }
+        FinalToken = rivals.size() + 1;
     }
-    
-    public void nextPosB(){
-        for(int n=1;n<map.getNumCasillasX()/4;n++){//Niveles
-            
-                int x = 1;
-                int y = n*4+1;
-                while(x<n*4){
-                    nextPosBP.add(x);
-                    nextPosBP.add(y);
-                    x = x+4;
-                }
-                while(y>=1){
-                    nextPosBP.add(x);
-                    nextPosBP.add(y);
-                    y = y-4;
-                }                
-            
-        }        
+
+    public void nextPosB() {
+        for (int n = 1; n < map.getNumCasillasX() / 4; n++) {//Niveles
+
+            int x = 1;
+            int y = n * 4 + 1;
+            if (y > map.getNumCasillasY()) {
+                y = map.getNumCasillasY() - 2;
+            }
+            while (x < n * 4) {
+                nextPosBP.add(x);
+                nextPosBP.add(y);
+                x = x + 4;
+            }
+            while (y >= 1) {
+                nextPosBP.add(x);
+                nextPosBP.add(y);
+                y = y - 4;
+            }
+
+        }
     }
-    
-    public void addGO2Move(Movable gObj, int posX, int posY){
-        if(listObjMov.contains(gObj)){
+
+    public void addGO2Move(Movable gObj, int posX, int posY) {
+        if (listObjMov.contains(gObj)) {
             int index = listObjMov.indexOf(gObj);
             posObjMov.remove(index);
             posObjMov.remove(index);
@@ -99,12 +104,12 @@ public class Controller {
         posObjMov.add(posX);
         posObjMov.add(posY);
     }
-    
-    public void addGO2Build(GOBuilder gObj, int posX, int posY, GameObj toBuild){
-        if((Math.abs(posX-gObj.getX())>1 || Math.abs(posY-gObj.getY())>1) && gObj instanceof Movable){
-            System.out.println("Primero me muevo cerca de "+posX+":"+posY);
-            System.out.println(posX-Integer.signum(posX-gObj.getX())+":"+(posY-Integer.signum(posY-gObj.getY())));
-            addGO2Move((Movable) gObj, (int) posX-Integer.signum(posX-gObj.getX()), (int) posY-Integer.signum(posY-gObj.getY()));
+
+    public void addGO2Build(GOBuilder gObj, int posX, int posY, GameObj toBuild) {
+        if ((Math.abs(posX - gObj.getX()) > 1 || Math.abs(posY - gObj.getY()) > 1) && gObj instanceof Movable) {
+            System.out.println("Primero me muevo cerca de " + posX + ":" + posY);
+            System.out.println(posX - Integer.signum(posX - gObj.getX()) + ":" + (posY - Integer.signum(posY - gObj.getY())));
+            addGO2Move((Movable) gObj, (int) posX - Integer.signum(posX - gObj.getX()), (int) posY - Integer.signum(posY - gObj.getY()));
         }
         this.toBuild.add(toBuild);
         this.builders.add(gObj);
@@ -112,25 +117,32 @@ public class Controller {
         this.posObjBul.add(posX);
         this.posObjBul.add(posY);
     }
-    
-    public void removeGO4Death(GameObj gObj){
-        if(gObj instanceof CityHall || gObj instanceof Defense){
-            if(gObj.getOwner().getName().equals(player.getName())){
-                nextPosBP.add(0,gObj.getY());
-                nextPosBP.add(0,gObj.getX());
+
+    public void removeGO4Death(GameObj gObj) {
+        if (gObj instanceof CityHall || gObj instanceof Defense) {
+            if (gObj instanceof CityHall) {
+                if (gObj.getOwner().getName().equals(player.getName())) {
+                    FinalToken = 0;
+                }else{
+                    FinalToken--;
+                }
+            }
+            if (gObj.getOwner().getName().equals(player.getName())) {
+                nextPosBP.add(0, gObj.getY());
+                nextPosBP.add(0, gObj.getX());
             }
         }
-        
-        if(gObj instanceof Movable && listObjMov.contains(gObj)){
+
+        if (gObj instanceof Movable && listObjMov.contains(gObj)) {
             int index = listObjMov.indexOf(gObj);
             posObjMov.remove(index);
             posObjMov.remove(index);
             listObjMov.remove(gObj);
-            System.out.println("Eliminado el objeto en posición "+gObj.getX()+":"+gObj.getY());
+            System.out.println("Eliminado el objeto en posición " + gObj.getX() + ":" + gObj.getY());
         }
-        
-        if(gObj instanceof GOBuilder){
-            if(builders.contains(gObj)){
+
+        if (gObj instanceof GOBuilder) {
+            if (builders.contains(gObj)) {
                 int index = builders.indexOf(gObj);
                 posObjBul.remove(index);
                 posObjBul.remove(index);
@@ -170,36 +182,42 @@ public class Controller {
     }
 
     public List<Movable> getMovUnits(User player) {
-        return map.getMovable(player);        
+        return map.getMovable(player);
+    }
+    
+    public int getFinalToken() {
+        return FinalToken;
     }
 
     public GOBuilder getAppBuilder(User player, GameObj toBuild) {
         List<GOBuilder> l = map.getGOBuilder(player);
         Random r = new Random();
-        GOBuilder builder =  null;
-        if(toBuild instanceof Movable){
+        GOBuilder builder = null;
+        if (toBuild instanceof Movable) {
             //Necesitamos el CityHall
-            int i=0;
+            int i = 0;
             boolean found = false;
-            while(!found && i<l.size()){
+            while (!found && i < l.size()) {
                 found = l.get(i) instanceof CityHall;
                 i++;
             }
-            if(found){
+            if (found) {
                 i--;
                 builder = l.get(i);
-            }else{            
+            } else {
                 return null;
             }
-        }else{
+        } else {
             // Necesitamos un Constructor
             List<GOBuilder> aux = new ArrayList<GOBuilder>();
-            for(int i=0;i<l.size();i++){
-                if(l.get(i) instanceof Builder && !this.builders.contains(l.get(i))){
+            for (int i = 0; i < l.size(); i++) {
+                if (l.get(i) instanceof Builder && !this.builders.contains(l.get(i))) {
                     aux.add(l.get(i));
                 }
             }
-            if(aux.size()==0) return null;
+            if (aux.size() == 0) {
+                return null;
+            }
             builder = aux.get(r.nextInt(aux.size()));
         }
         return builder;
@@ -207,51 +225,53 @@ public class Controller {
 
     public List<Integer> getPosLibre(GOBuilder builder) {
         List<Integer> l = new ArrayList<Integer>();
-        if(!(builder instanceof Movable)){
-            l.add(builder.getX()-1);
-            l.add(builder.getY()-1);
-            l.add(builder.getX()-1);
+        if (!(builder instanceof Movable)) {
+            l.add(builder.getX() - 1);
+            l.add(builder.getY() - 1);
+            l.add(builder.getX() - 1);
             l.add(builder.getY());
-            l.add(builder.getX()-1);
-            l.add(builder.getY()+1);
+            l.add(builder.getX() - 1);
+            l.add(builder.getY() + 1);
             l.add(builder.getX());
-            l.add(builder.getY()-1);
-            l.add(builder.getX()-1);
-            l.add(builder.getY()+1);
-            l.add(builder.getX()+1);
-            l.add(builder.getY()-1);
-            l.add(builder.getX()+1);
+            l.add(builder.getY() - 1);
+            l.add(builder.getX() - 1);
+            l.add(builder.getY() + 1);
+            l.add(builder.getX() + 1);
+            l.add(builder.getY() - 1);
+            l.add(builder.getX() + 1);
             l.add(builder.getY());
-            l.add(builder.getX()+1);
-            l.add(builder.getY()+1);
-            int i=0;
-            while(i<l.size()/2){
-                if(l.get(i)<0 || l.get(i)> map.getNumCasillasX()|| l.get(i+1)<0 || l.get(i+1)> map.getNumCasillasY() ){
+            l.add(builder.getX() + 1);
+            l.add(builder.getY() + 1);
+            int i = 0;
+            while (i < l.size() / 2) {
+                if (l.get(i) < 0 || l.get(i) > map.getNumCasillasX() || l.get(i + 1) < 0 || l.get(i + 1) > map.getNumCasillasY()) {
                     l.remove(i);
                     l.remove(i);
-                }else{
-                    i=i+2;
+                } else {
+                    i = i + 2;
                 }
             }
-            for(i=0;i<this.posObjBul.size();i=i+2){
-                int j=0;
+            for (i = 0; i < this.posObjBul.size(); i = i + 2) {
+                int j = 0;
                 boolean found = false;
-                while(!found && j<l.size()){
-                    if(l.get(j)==posObjBul.get(i) && l.get(j+1)==posObjBul.get(i+1)){
+                while (!found && j < l.size()) {
+                    if (l.get(j) == posObjBul.get(i) && l.get(j + 1) == posObjBul.get(i + 1)) {
                         l.remove(j);
                         l.remove(j);
                         found = true;
-                    }else{
-                        j=j+2;
+                    } else {
+                        j = j + 2;
                     }
                 }
-                if(found) i= i-2;
+                if (found) {
+                    i = i - 2;
+                }
             }
-        }else{
-           if(builder.getOwner().getName().equals(this.player.getName())){
-               l.add(nextPosBP.remove(0));
-               l.add(nextPosBP.remove(0));
-           } 
+        } else if (builder.getOwner().getName().equals(this.player.getName())) {
+            if (!nextPosBP.isEmpty()) {
+                l.add(nextPosBP.remove(0));
+                l.add(nextPosBP.remove(0));
+            }
         }
         return l;
     }

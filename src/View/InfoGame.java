@@ -48,6 +48,19 @@ public class InfoGame {
 
     }
 
+    public int getWarriors() {
+        return warriors;
+    }
+
+    public int getBuilders() {
+        return builders;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+    
+
     public void updateInfo(List<JLabel> l) throws InterruptedException {
 
         synchronized (l) {

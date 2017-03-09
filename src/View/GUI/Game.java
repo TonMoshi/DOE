@@ -13,10 +13,12 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import no.geosoft.cc.graphics.GScene;
 import no.geosoft.cc.graphics.GWindow;
@@ -29,27 +31,37 @@ public class Game extends javax.swing.JPanel {
 
     private Timer t;
     private final InfoGame info;
+    private MainFrame mf;
+    private int hour, min, auxHour, auxMin, auxSec, auxDay, auxMonth, auxYear;
+    private Calendar rightNow;
+    private List<User> rivals;
 
     /**
      * Creates new form Game
+     *
      * @param user
      * @param rivals
      * @param mf
      */
     public Game(User user, List<User> rivals, MainFrame mf) {
-        
+
         initComponents();
+        this.mf = mf;
+        this.rivals = rivals;
+        rightNow = Calendar.getInstance();
         GWindow window = new GWindow(Color.BLACK);
         jPDraw.add(window.getCanvas());
         // Create scene with default viewport and world extent settings
         GScene scene = new GScene(window);
         window.getCanvas().setPreferredSize(new Dimension(40 * Cell.SIDE, 30 * Cell.SIDE));
         // Create the graphics object and add to the scene
-        Model.Terrain.Map map = new Model.Terrain.Map(40*Cell.SIDE, 30*Cell.SIDE);
+        Model.Terrain.Map map = new Model.Terrain.Map(40 * Cell.SIDE, 30 * Cell.SIDE);
         scene.add(map.getRep());
         info = new InfoGame(Model.Buildings.CityHall.MAXLIFE);
-        g = new Model.Game(user, rivals, map, scene, info);
-        //map.addGameObj(gObj);
+        g = new Model.Game(user, rivals, map, scene, info, this);
+        //map.addGameObj(gObj);        
+        hour = rightNow.get(Calendar.HOUR);
+        min = rightNow.get(Calendar.MINUTE);
         t = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,6 +91,68 @@ public class Game extends javax.swing.JPanel {
             }
         });
         t2.start();
+    }
+
+    public void winner() {
+        JOptionPane.showMessageDialog(this, "Enhorabuena ¡Has ganado!",
+                "¡Victoria!", JOptionPane.PLAIN_MESSAGE);
+        t.stop();
+        
+        auxYear = rightNow.get(Calendar.YEAR);
+        auxMonth = rightNow.get(Calendar.MONTH);
+        auxDay = rightNow.get(Calendar.DAY_OF_MONTH);        
+        auxHour = rightNow.get(Calendar.HOUR_OF_DAY);
+        auxMin = rightNow.get(Calendar.MINUTE);
+        auxSec = rightNow.get(Calendar.SECOND);
+        
+        int time = (((auxHour - hour)*60)+(auxMin - min));
+        String actualTime = (auxHour+":"+auxMin+":"+auxSec+"-"+auxDay+"/"+auxMonth+"/"+auxYear);
+        mf.getUser().newWin();
+        mf.getUser().newPlays();
+        
+        for (int i = 0; i < rivals.size(); i++) {
+            rivals.get(i).newPlays();
+        }
+        String[] data = new String[6];
+        data[0] = actualTime;
+        data[1] = String.valueOf(time);
+        data[2] = String.valueOf(info.getLifeCityHall());
+        data[3] = String.valueOf(info.getDefense());
+        data[4] = String.valueOf(info.getBuilders());
+        data[5] = String.valueOf(info.getWarriors());
+        mf.getMc().setLastGameWin(data, rivals);
+        mf.showMenu();
+
+    }
+
+    public void loser() {
+        JOptionPane.showMessageDialog(this, "Has fracasado...",
+                "¡Derrota!", JOptionPane.PLAIN_MESSAGE);
+        t.stop();
+        auxYear = rightNow.get(Calendar.YEAR);
+        auxMonth = rightNow.get(Calendar.MONTH);
+        auxDay = rightNow.get(Calendar.DAY_OF_MONTH);        
+        auxHour = rightNow.get(Calendar.HOUR);
+        auxMin = rightNow.get(Calendar.MINUTE);
+        
+        int time = (((auxHour - hour)*60)+(auxMin - min));
+        String actualTime = (auxHour+":"+auxMin+":"+auxSec+"-"+auxDay+"/"+auxMonth+"/"+auxYear);
+        mf.getUser().newPlays();
+        
+        for (int i = 0; i < rivals.size(); i++) {
+            rivals.get(i).newWin();
+            rivals.get(i).newPlays();
+        }
+        
+        String[] data = new String[6];
+        data[0] = actualTime;
+        data[1] = String.valueOf(time);
+        data[2] = String.valueOf(info.getLifeCityHall());
+        data[3] = String.valueOf(info.getDefense());
+        data[4] = String.valueOf(info.getBuilders());
+        data[5] = String.valueOf(info.getWarriors());
+        mf.getMc().setLastGameLose(data, rivals);
+        mf.showMenu();
     }
 
     /**

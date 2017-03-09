@@ -20,15 +20,16 @@ public class TableInfo extends AbstractTableModel {
 
     public TableInfo(MainController mc) {
         this.users = mc.getUsers();
-        Collections.sort(users, (User o1, User o2) -> {
-            if (o1.getWinRatio() > o2.getWinRatio()) {
-                return -1;
-            } else if (o1.getWinRatio() == o2.getWinRatio()) {
-                return 0;
-            } else {
-                return 1;
-            }
-        });
+        users.sort(null);
+//        Collections.sort(users, (User o1, User o2) -> {
+//            if (o1.getWinRatio() > o2.getWinRatio()) {
+//                return -1;
+//            } else if (o1.getWinRatio() == o2.getWinRatio()) {
+//                return 0;
+//            } else {
+//                return 1;
+//            }
+//        });
     }
 
     @Override

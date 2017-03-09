@@ -79,7 +79,7 @@ public class User implements Comparable<Model.Users.User>{
     
     public String getName() {
         return name;
-    }   
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -95,21 +95,21 @@ public class User implements Comparable<Model.Users.User>{
     
 
     public void newWin() {
-        this.win = win++;
+        this.win++;
     }
 
     public void newPlays() {
-        this.plays = plays++;
+        this.plays++;
+        updateWinRatio();
     }
     
     
     private void updateWinRatio(){
-        if (plays == 0 || win == 0 ) {
-            winRatio = 0;
+        if (this.plays == 0 || this.win == 0 ) {
+            this.winRatio = 0;
         }else{
-            winRatio = plays/win;
+            this.winRatio = this.plays/this.win;
         }
-        
     }
     
     public boolean addAlly(User ally){

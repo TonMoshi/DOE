@@ -49,6 +49,7 @@ public class NewGame extends javax.swing.JPanel {
         InnerTable = new javax.swing.JTable();
         Enviar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        Volver = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -88,6 +89,17 @@ public class NewGame extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         add(jLabel1, gridBagConstraints);
+
+        Volver.setText("Volver");
+        Volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VolverActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        add(Volver, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
@@ -106,10 +118,16 @@ public class NewGame extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_EnviarActionPerformed
 
+    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
+        // TODO add your handling code here:
+        mf.showMenu();
+    }//GEN-LAST:event_VolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Enviar;
     private javax.swing.JTable InnerTable;
+    private javax.swing.JButton Volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane table;
     // End of variables declaration//GEN-END:variables

@@ -45,6 +45,7 @@ public class Menu extends javax.swing.JPanel {
         Exit = new javax.swing.JButton();
         User = new javax.swing.JLabel();
         LogOut = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -78,7 +79,7 @@ public class Menu extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         add(Exit, gridBagConstraints);
 
         User.setFont(new java.awt.Font("Felix Titling", 1, 24)); // NOI18N
@@ -96,8 +97,19 @@ public class Menu extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         add(LogOut, gridBagConstraints);
+
+        jButton1.setText("Diplomacy");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        add(jButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
@@ -124,6 +136,11 @@ public class Menu extends javax.swing.JPanel {
         mf.showMainPanel();
     }//GEN-LAST:event_LogOutActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Exit;
@@ -131,5 +148,6 @@ public class Menu extends javax.swing.JPanel {
     private javax.swing.JButton Play;
     private javax.swing.JButton Stats;
     private javax.swing.JLabel User;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

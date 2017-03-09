@@ -76,7 +76,8 @@ public class GameObj {
     }   
 
     public void die() {
-        this.rep.removeSegments();
+//        this.rep.removeSegments();
         this.rep.removeAll();
+        this.rep.remove();
     }
 }

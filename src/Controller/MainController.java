@@ -10,8 +10,11 @@ import Model.BBDD.Connection;
 import Model.BBDD.Query;
 import Model.Controller;
 import Model.Users.User;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,38 +38,48 @@ public class MainController {
 
     public boolean logIn(String name, String pass) {
 
-        String auxPass = new Cipher(pass).toString();
-        Connection conn = new Connection();
-        Query query = new Query(conn);
+        try {
+            String auxPass = new Cipher(pass).toString();
+            Connection conn = new Connection();
+            Query query = new Query(conn);
 
-        User user = query.getUser(name);
+            User user = query.getUser(name);
 
-        conn.closeConn();
-        if (user == null) {
+            conn.closeConn();
+            if (user == null) {
+                return false;
+
+            } else {
+                return user.getPass().equals(auxPass);
+            }
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-
-        } else {
-            return user.getPass().equals(auxPass);
         }
 
     }
 
     public boolean register(String name, String email, String pass) {
 
-        String auxPass = new Cipher(pass).toString();
-        Connection conn = new Connection();
-        Query query = new Query(conn);
+        try {
+            String auxPass = new Cipher(pass).toString();
+            Connection conn = new Connection();
+            Query query = new Query(conn);
 
-        if (!query.userExist(name)) {
-            if (query.setUser(name, email, auxPass)) {
-                conn.closeConn();
-                return true;
+            if (!query.userExist(name)) {
+                if (query.setUser(name, email, auxPass)) {
+                    conn.closeConn();
+                    return true;
+                } else {
+                    conn.closeConn();
+                    return false;
+                }
             } else {
                 conn.closeConn();
                 return false;
             }
-        } else {
-            conn.closeConn();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -79,23 +92,23 @@ public class MainController {
         conn.closeConn();
         return users;
     }
-    
-    public List<User> getAllies(User user){
+
+    public List<User> getAllies(User user) {
         Connection conn = new Connection();
         Query query = new Query(conn);
         List<User> allies = query.getAllies(user.getName());
         conn.closeConn();
         return allies;
-    
+
     }
-    
-    public List<User> getEnemies(User user){
+
+    public List<User> getEnemies(User user) {
         Connection conn = new Connection();
         Query query = new Query(conn);
         List<User> enemies = query.getEnemies(user.getName());
         conn.closeConn();
         return enemies;
-    
+
     }
 
     public User getUser(String userName) {
@@ -105,6 +118,43 @@ public class MainController {
         conn.closeConn();
         return user;
     }
+
+    public ArrayList<User> getUsersNeutral() {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        ArrayList<User> users = query.getUsersNeutral(mF.getUser());
+        conn.closeConn();
+        return users;
+    }
+    
+    public void setUserEnemy(User u, User e) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        query.setUserEnemy(u,e);
+        conn.closeConn();
+    }
+    
+    public void setUserAlly(User u, User e) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        query.setUserAlly(u,e);
+        conn.closeConn();
+    }
+    
+    public void deleteUserEnemy(User u, User e) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        query.deleteUserEnemy(e, u);
+        conn.closeConn();
+    }
+    
+    public void deleteUserAlly(User u, User e) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        query.deleteUserAlly(e, u);
+        conn.closeConn();
+    }
+
 
     public int getDuration(String userName) {
         Connection conn = new Connection();
@@ -133,18 +183,40 @@ public class MainController {
 
     public boolean setPassword(String pass, String actualName) {
 
-        String auxPass = new Cipher(pass).toString();
+        try {
+            String auxPass = new Cipher(pass).toString();
+            Connection conn = new Connection();
+            Query query = new Query(conn);
+
+            boolean token = false;
+            token = query.setPassword(auxPass, actualName);
+            conn.closeConn();
+            if (token) {
+                mF.getUser().setPass(auxPass);
+            }
+            return token;
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+    }
+
+    public void setLastGameWin(String[] data, List<User> rivals) {
         Connection conn = new Connection();
         Query query = new Query(conn);
-        
         boolean token = false;
-        token = query.setPassword(auxPass, actualName);
+        token = query.updateUserMatchWinner(mF.getUser(), data, rivals);
         conn.closeConn();
-        if (token) {
-            mF.getUser().setPass(auxPass);
-        }
-        return token;
 
+    }
+
+    public void setLastGameLose(String[] data, List<User> rivals) {
+        Connection conn = new Connection();
+        Query query = new Query(conn);
+        boolean token = false;
+        token = query.updateUserMatchLoser(mF.getUser(), data, rivals);
+        conn.closeConn();
     }
 
     public boolean setEmail(String email, String name) {
@@ -159,23 +231,6 @@ public class MainController {
         return token;
 
     }
-
-//    public void startControllerModel(User player, JPanel panel) {
-//        Map map = new Map(1, 1);
-//
-//        GWindow window = new GWindow();
-//        window.getCanvas().setPreferredSize(new Dimension(1000, 1000));
-//        panel.add(window.getCanvas());
-//        GScene scene = new GScene(window);
-//
-//        InfoGame info = new InfoGame(1000);
-//
-//        Connection conn = new Connection();
-//        Query query = new Query(conn);
-//        List<User> rivals = query.getEnemies(player.getName());
-//        conn.closeConn();
-//        odin = new Model.Controller(player, rivals, map, scene, info);
-//    }
 
     public Controller getOdin() {
         return odin;
