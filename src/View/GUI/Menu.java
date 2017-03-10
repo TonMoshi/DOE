@@ -45,7 +45,7 @@ public class Menu extends javax.swing.JPanel {
         Exit = new javax.swing.JButton();
         User = new javax.swing.JLabel();
         LogOut = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        Diplomacy = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -100,16 +100,16 @@ public class Menu extends javax.swing.JPanel {
         gridBagConstraints.gridy = 4;
         add(LogOut, gridBagConstraints);
 
-        jButton1.setText("Diplomacy");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Diplomacy.setText("Diplomacy");
+        Diplomacy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                DiplomacyActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        add(jButton1, gridBagConstraints);
+        add(Diplomacy, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
@@ -136,18 +136,19 @@ public class Menu extends javax.swing.JPanel {
         mf.showMainPanel();
     }//GEN-LAST:event_LogOutActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void DiplomacyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiplomacyActionPerformed
         // TODO add your handling code here:
+        mf.showDiplomacy();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_DiplomacyActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Diplomacy;
     private javax.swing.JButton Exit;
     private javax.swing.JButton LogOut;
     private javax.swing.JButton Play;
     private javax.swing.JButton Stats;
     private javax.swing.JLabel User;
-    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

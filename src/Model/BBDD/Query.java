@@ -287,6 +287,9 @@ public class Query {
             String delete = "DELETE FROM Enemies WHERE Player1='"+e.getName()+"', AND Player2='"+u.getName()+"'";
             stmt.executeUpdate(delete);
             conn.getConn().commit();
+            delete = "DELETE FROM Enemies WHERE Player1='"+u.getName()+"', AND Player2='"+e.getName()+"'";
+            stmt.executeUpdate(delete);
+            conn.getConn().commit();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Query.class.getName()).log(Level.SEVERE, null, ex);
@@ -298,6 +301,9 @@ public class Query {
         try {
             stmt = conn.getConn().createStatement();
             String delete = "DELETE FROM Alliances WHERE Player1='"+e.getName()+"', AND Player2='"+u.getName()+"'";
+            stmt.executeUpdate(delete);
+            conn.getConn().commit();
+            delete = "DELETE FROM Alliances WHERE Player1='"+u.getName()+"', AND Player2='"+e.getName()+"'";
             stmt.executeUpdate(delete);
             conn.getConn().commit();
             return true;

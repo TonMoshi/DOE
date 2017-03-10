@@ -38,7 +38,7 @@ public class TableDiplomacyEnemies extends AbstractTableModel {
                 case 0:
                     return mf.getUser().getName();
                 case 1:
-                    return true;
+                    return false;
                 default:
                     throw new AssertionError();
             }

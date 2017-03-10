@@ -16,19 +16,19 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TableDiplomacyAllies extends AbstractTableModel {
 
-    private List<User> enemies;
+    private List<User> allies;
     private boolean[] players;
     private MainFrame mf;
 
     public TableDiplomacyAllies(MainFrame mf) {
         this.mf = mf;
-        this.enemies = mf.getUser().getEnemies();
-        players = new boolean[enemies.size()];
+        this.allies = mf.getUser().getAllies();
+        players = new boolean[allies.size()];
     }
 
     @Override
     public int getRowCount() {
-        return enemies.size()+1;
+        return allies.size()+1;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TableDiplomacyAllies extends AbstractTableModel {
         } else {
             switch (columnIndex) {
                 case 0:
-                    return enemies.get(rowIndex-1).getName();
+                    return allies.get(rowIndex-1).getName();
                 case 1:
                     return players[rowIndex-1];
                 default:

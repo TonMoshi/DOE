@@ -14,16 +14,34 @@ import javax.swing.table.TableModel;
  * @author Moshitron
  */
 public class Diplomacy extends javax.swing.JPanel {
-    
+
     private List<User> enemies;
     private List<User> allies;
     private List<User> neutrals;
+    private int user;
+    private MainFrame mf;
 
     /**
      * Creates new form Diplomacy
      */
     public Diplomacy(MainFrame mf, TableModel enemies, TableModel allies) {
         initComponents();
+
+        this.mf = mf;
+        neutrals = mf.getMc().getUsersNeutral();
+        this.allies = mf.getMc().getAllies(mf.getUser());
+        this.enemies = mf.getMc().getEnemies(mf.getUser());
+        this.tableAlly.setModel(allies);
+        this.tableEnemy.setModel(enemies);
+        modifyNeutrals();
+
+    }
+
+    private void modifyNeutrals() {
+        for (int i = 0; i < neutrals.size(); i++) {
+            Users.addItem(neutrals.get(i).getName());
+        }
+
     }
 
     /**
@@ -38,7 +56,7 @@ public class Diplomacy extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableEnemy = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         Users = new javax.swing.JComboBox<>();
         Aliado = new javax.swing.JButton();
@@ -48,13 +66,13 @@ public class Diplomacy extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tableAlly = new javax.swing.JTable();
 
         setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableEnemy.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,7 +83,7 @@ public class Diplomacy extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableEnemy);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -170,7 +188,7 @@ public class Diplomacy extends javax.swing.JPanel {
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tableAlly.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -181,7 +199,7 @@ public class Diplomacy extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tableAlly);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -205,24 +223,52 @@ public class Diplomacy extends javax.swing.JPanel {
 
     private void AliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AliadoActionPerformed
         // TODO add your handling code here:
+        if (user != 0) {
+            mf.getUser().addAlly(mf.getMc().getUser(Users.getItemAt(user)));
+            mf.getMc().setUserAlly(mf.getUser(), mf.getMc().getUser(Users.getItemAt(user)));
+            tableAlly.repaint();
+        }
     }//GEN-LAST:event_AliadoActionPerformed
 
     private void NeutralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NeutralActionPerformed
         // TODO add your handling code here:
+
+        for (int i = 0; i < enemies.size(); i++) {
+            if ((boolean) tableEnemy.getValueAt(i+1, 1)) {
+                mf.getUser().removeEnemy(enemies.get(i));
+                mf.getMc().deleteUserEnemy(mf.getUser(), enemies.get(i));
+            }
+        }
+        
+        for (int i = 0; i < allies.size(); i++) {
+            if ((boolean) tableAlly.getValueAt(i+1, 1)) {
+                mf.getUser().removeEnemy(allies.get(i));
+                mf.getMc().deleteUserAlly(mf.getUser(), allies.get(i));
+            }
+        }
+        
+        tableAlly.repaint();
+        tableEnemy.repaint();
     }//GEN-LAST:event_NeutralActionPerformed
 
     private void EnemigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnemigoActionPerformed
         // TODO add your handling code here:
+        if (user != 0) {
+            mf.getUser().addEnemy(mf.getMc().getUser(Users.getItemAt(user)));
+            mf.getMc().setUserEnemy(mf.getUser(), mf.getMc().getUser(Users.getItemAt(user)));
+            tableEnemy.repaint();
+        }
     }//GEN-LAST:event_EnemigoActionPerformed
 
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
         // TODO add your handling code here:
+        mf.showMenu();
     }//GEN-LAST:event_VolverActionPerformed
 
     private void UsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersActionPerformed
         // TODO add your handling code here:
-        
-        
+        user = Users.getSelectedIndex();
+
     }//GEN-LAST:event_UsersActionPerformed
 
 
@@ -238,7 +284,7 @@ public class Diplomacy extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tableAlly;
+    private javax.swing.JTable tableEnemy;
     // End of variables declaration//GEN-END:variables
 }
